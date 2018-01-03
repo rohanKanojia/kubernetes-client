@@ -133,41 +133,41 @@ public class PodIT {
 
   @Test
   public void log() throws InterruptedException {
-    waitUntilPodIsReady(pod1.getMetadata().getName(), 60);
+    //waitUntilPodIsReady(pod1.getMetadata().getName(), 60);
+    TimeUnit.MINUTES.sleep(5);
     String log = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).getLog();
     assertNotNull(log);
   }
 
   @Test
   public void exec() throws InterruptedException {
-    /*
-    waitUntilPodIsReady(pod1.getMetadata().getName(), 60);
-    final CountDownLatch execLatch = new CountDownLatch(1);
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    ExecWatch execWatch = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName())
-      .writingOutput(out).withTTY().usingListener(new ExecListener() {
-        @Override
-        public void onOpen(Response response) {
-          logger.info("Shell was opened");
-        }
+//    //waitUntilPodIsReady(pod1.getMetadata().getName(), 60);
+//    //final CountDownLatch execLatch = new CountDownLatch(1);
+//    TimeUnit.MINUTES.sleep(5);
+//    ByteArrayOutputStream out = new ByteArrayOutputStream();
+//    ExecWatch execWatch = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName())
+//      .writingOutput(out).withTTY().usingListener(new SimpleListener()).exec("date");
+//
+//    //execLatch.await(5, TimeUnit.MINUTES);
+//    assertNotNull(execWatch);
+//    assertNotNull(out.toString());
+  }
 
-        @Override
-        public void onFailure(Throwable throwable, Response response) {
-          logger.info("Shell barfed");
-          execLatch.countDown();
-        }
+  private static class SimpleListener implements ExecListener {
+    @Override
+    public void onOpen(Response response) {
+      logger.info("The shell is open now");
+    }
 
-        @Override
-        public void onClose(int i, String s) {
-          logger.info("Shell closed");
-          execLatch.countDown();
-        }
-      }).exec("date");
+    @Override
+    public void onFailure(Throwable t, Response response) {
+      logger.error("Shell barfed!");
+    }
 
-    execLatch.await(5, TimeUnit.MINUTES);
-    assertNotNull(execWatch);
-    assertNotNull(out.toString());
-    */
+    @Override
+    public void onClose(int code, String reason) {
+      logger.info("The shell closes now");
+    }
   }
 
   @After
