@@ -20,6 +20,9 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import io.fabric8.kubernetes.client.dsl.ExecListener;
+import io.fabric8.kubernetes.client.dsl.ExecWatch;
+import okhttp3.Response;
 import org.apache.commons.lang.RandomStringUtils;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
@@ -31,6 +34,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,27 +67,12 @@ public class PodIT {
       .withNewMetadata().withName("pod1-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase()).endMetadata()
       .withNewSpec()
       .addNewContainer()
-      .withName("mysql")
-      .withImage("openshift/mysql-55-centos7")
+      .withName("ruby-hello-world")
+      .withImage("openshift/ruby-hello-world")
       .addNewPort()
-      .withContainerPort(3306)
+      .withContainerPort(8080)
+      .withProtocol("TCP")
       .endPort()
-      .addNewEnv()
-      .withName("MYSQL_ROOT_PASSWORD")
-      .withValue("password")
-      .endEnv()
-      .addNewEnv()
-      .withName("MYSQL_DATABASE")
-      .withValue("foodb")
-      .endEnv()
-      .addNewEnv()
-      .withName("MYSQL_USER")
-      .withValue("luke")
-      .endEnv()
-      .addNewEnv()
-      .withName("MYSQL_PASSWORD")
-      .withValue("password")
-      .endEnv()
       .endContainer()
       .endSpec()
       .build();
@@ -113,6 +105,43 @@ public class PodIT {
     pod1 = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).edit()
       .editMetadata().addToLabels("foo", "bar").and().done();
     assertEquals("bar", pod1.getMetadata().getLabels().get("foo"));
+  }
+
+  @Test
+  public void log() throws InterruptedException {
+    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(5, TimeUnit.MINUTES);
+    String log = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).getLog();
+    assertNotNull(log);
+  }
+
+  @Test
+  public void exec() throws InterruptedException {
+    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(5, TimeUnit.MINUTES);
+    final CountDownLatch execLatch = new CountDownLatch(1);
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    ExecWatch execWatch = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName())
+      .writingOutput(out).withTTY().usingListener(new ExecListener() {
+        @Override
+        public void onOpen(Response response) {
+          logger.info("Shell was opened");
+        }
+
+        @Override
+        public void onFailure(Throwable throwable, Response response) {
+          logger.info("Shell barfed");
+          execLatch.countDown();
+        }
+
+        @Override
+        public void onClose(int i, String s) {
+          logger.info("Shell closed");
+          execLatch.countDown();
+        }
+      }).exec("date");
+
+    execLatch.await(5, TimeUnit.MINUTES);
+    assertNotNull(execWatch);
+    assertNotNull(out.toString());
   }
 
   @Test
