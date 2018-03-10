@@ -109,6 +109,6 @@ public class DeploymentConfigIT {
     Thread.sleep(6000);
     client.deploymentConfigs().inNamespace(currentNamespace).delete();
     // Wait for resources to get destroyed
-    Thread.sleep(40000);
+    Thread.sleep(30000);
   }
 }
