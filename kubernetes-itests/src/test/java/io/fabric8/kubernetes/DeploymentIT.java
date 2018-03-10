@@ -128,6 +128,6 @@ public class DeploymentIT {
     Thread.sleep(6000);
     client.extensions().deployments().inNamespace(currentNamespace).delete();
     // Wait for resources to get destroyed
-    Thread.sleep(120000);
+    Thread.sleep(40000);
   }
 }

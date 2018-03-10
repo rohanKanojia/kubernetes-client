@@ -106,6 +106,6 @@ public class TemplateIT {
   public void cleanup() throws InterruptedException {
     client.templates().inNamespace(currentNamespace).delete();
     // Wait for resources to get destroyed
-    Thread.sleep(120000);
+    Thread.sleep(40000);
   }
 }
