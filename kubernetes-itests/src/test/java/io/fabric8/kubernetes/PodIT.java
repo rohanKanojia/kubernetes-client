@@ -129,14 +129,14 @@ public class PodIT {
 
   @Test
   public void log() throws InterruptedException {
-    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(5, TimeUnit.MINUTES);
+    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(10, TimeUnit.MINUTES);
     String log = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).getLog();
     assertNotNull(log);
   }
 
   @Test
   public void exec() throws InterruptedException {
-    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(5, TimeUnit.MINUTES);
+    client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName()).waitUntilReady(10, TimeUnit.MINUTES);
     final CountDownLatch execLatch = new CountDownLatch(1);
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     ExecWatch execWatch = client.pods().inNamespace(currentNamespace).withName(pod1.getMetadata().getName())
