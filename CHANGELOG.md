@@ -21,6 +21,8 @@
 
     * Fix #1172 : Use v1beta1 for CronJob
 
+    * Fix #1158: Add support for label selectors in the mock server
+
   Improvements
   
     * Added Kubernetes/Openshift examples for client.getVersion()
@@ -36,6 +38,7 @@
     * Fix #1066 : Add support for Kubernetes RBAC Role and Role Binding
     * Fix #1150: Add support for Kubernetes RBAC Cluster Role and Cluster Role Binding
     * Fix #770: Added Support for CronJob
+    * Fix #1139 : Make it easy to get the URL of a service.
 
 #### 4.0.0
   Bugs
