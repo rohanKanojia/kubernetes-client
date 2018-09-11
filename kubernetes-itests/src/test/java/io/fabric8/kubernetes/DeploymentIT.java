@@ -21,16 +21,18 @@ import io.fabric8.kubernetes.api.model.apps.DeploymentBuilder;
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.internal.readiness.Readiness;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -51,11 +53,10 @@ public class DeploymentIT {
 
   private String currentNamespace;
 
-  private static final Logger logger = LoggerFactory.getLogger(DeploymentIT.class);
-
   @Before
   public void init() {
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
 
     client.apps().deployments().inNamespace(currentNamespace).delete();

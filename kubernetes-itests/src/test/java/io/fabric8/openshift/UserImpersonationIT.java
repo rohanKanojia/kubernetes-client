@@ -22,6 +22,7 @@ import io.fabric8.kubernetes.client.RequestConfig;
 import io.fabric8.openshift.api.model.ProjectRequest;
 import io.fabric8.openshift.api.model.User;
 import io.fabric8.openshift.client.OpenShiftClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.openshift.impl.requirement.RequiresOpenshift;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -33,6 +34,8 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -58,6 +61,7 @@ public class UserImpersonationIT {
 
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
     // Create impersonator cluster role
     impersonatorRole = new KubernetesClusterRoleBuilder()

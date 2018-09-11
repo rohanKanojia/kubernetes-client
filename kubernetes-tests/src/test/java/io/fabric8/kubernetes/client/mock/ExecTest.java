@@ -17,7 +17,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.junit.Rule;
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Sergii Leshchenko
@@ -53,7 +52,7 @@ public class ExecTest {
   @Test
   public void testRealServer()
     throws InterruptedException {
-    //Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     logger.info("testConnectionLeaksAfterExecutingCommandInNonExistingPodOnRealServer");
     testConnectionLeaks(realServerClientProvider);
   }
@@ -114,10 +113,12 @@ public class ExecTest {
 
     @Override
     public void onOpen(Response response) {
+      response.close();
     }
 
     @Override
     public void onFailure(Throwable t, Response response) {
+      response.close();
       completionFuture.completeExceptionally(t);
     }
 

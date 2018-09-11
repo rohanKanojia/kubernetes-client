@@ -20,6 +20,7 @@ import io.fabric8.openshift.api.model.SecurityContextConstraints;
 import io.fabric8.openshift.api.model.SecurityContextConstraintsBuilder;
 import io.fabric8.openshift.api.model.SecurityContextConstraintsList;
 import io.fabric8.openshift.client.OpenShiftClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.openshift.impl.requirement.RequiresOpenshift;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -29,6 +30,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 
@@ -44,6 +47,7 @@ public class SecurityContextConstraintsIT {
   @Before
   public void init(){
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     scc = new SecurityContextConstraintsBuilder()
       .withNewMetadata().withName("test-scc")
       .addToLabels("foo","bar")

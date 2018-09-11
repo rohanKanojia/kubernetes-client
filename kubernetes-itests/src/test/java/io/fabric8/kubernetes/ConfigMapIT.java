@@ -18,6 +18,7 @@ package io.fabric8.kubernetes;
 
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -26,6 +27,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -47,6 +51,7 @@ public class ConfigMapIT {
 
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
     configMap1 = new ConfigMapBuilder()
       .withNewMetadata().withName("configmap1").endMetadata()

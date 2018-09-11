@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -56,6 +60,7 @@ public class ReplicaSetIT {
 
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
     Map<String, Quantity> requests = new HashMap<>();
     requests.put("cpu", new Quantity("100m"));

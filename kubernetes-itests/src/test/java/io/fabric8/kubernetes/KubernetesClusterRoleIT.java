@@ -16,12 +16,15 @@
 package io.fabric8.kubernetes;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import io.fabric8.kubernetes.api.model.rbac.KubernetesClusterRole;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesClusterRoleList;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesClusterRoleBuilder;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesPolicyRuleBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -51,6 +54,7 @@ public class KubernetesClusterRoleIT {
   @Before
   public void init() {
     // Do not run tests on opeshift 3.6.0 and 3.6.1
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     assumeFalse(client.getVersion().getMajor().equalsIgnoreCase("1")
       && client.getVersion().getMinor().startsWith("6"));
 

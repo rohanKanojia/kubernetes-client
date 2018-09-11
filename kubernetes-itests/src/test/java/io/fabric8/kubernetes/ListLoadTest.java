@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 import io.fabric8.kubernetes.api.model.apps.DeploymentList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -28,6 +29,9 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RunWith(ArquillianConditionalRunner.class)
 @RequiresKubernetes
@@ -43,6 +47,7 @@ public class ListLoadTest {
 
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
   }
 

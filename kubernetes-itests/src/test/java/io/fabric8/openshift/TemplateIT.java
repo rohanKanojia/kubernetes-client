@@ -22,6 +22,7 @@ import io.fabric8.openshift.api.model.Template;
 import io.fabric8.openshift.api.model.TemplateBuilder;
 import io.fabric8.openshift.api.model.TemplateList;
 import io.fabric8.openshift.client.OpenShiftClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.openshift.impl.requirement.RequiresOpenshift;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -32,6 +33,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static io.fabric8.kubernetes.client.utils.ReplaceValueStream.replaceValues;
 import static junit.framework.TestCase.assertEquals;
@@ -54,6 +57,7 @@ public class TemplateIT {
 
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
     Service aService = new ServiceBuilder()
       .withNewMetadata().withName("bar").endMetadata()

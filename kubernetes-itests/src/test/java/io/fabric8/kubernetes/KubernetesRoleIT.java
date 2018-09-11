@@ -20,6 +20,7 @@ import io.fabric8.kubernetes.api.model.rbac.KubernetesRoleList;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesRoleBuilder;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesPolicyRuleBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -28,6 +29,9 @@ import org.junit.runner.RunWith;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -51,6 +55,7 @@ public class KubernetesRoleIT {
   @Before
   public void init() {
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
 
     // Do not run tests on opeshift 3.6.0 and 3.6.1

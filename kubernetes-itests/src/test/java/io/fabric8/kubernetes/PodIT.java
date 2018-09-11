@@ -22,6 +22,7 @@ import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.dsl.ExecListener;
 import io.fabric8.kubernetes.client.dsl.ExecWatch;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.apache.commons.lang.RandomStringUtils;
 import org.arquillian.cube.kubernetes.api.Session;
@@ -32,12 +33,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,10 +60,9 @@ public class PodIT {
 
   private String currentNamespace;
 
-  private static final Logger logger = LoggerFactory.getLogger(PodIT.class);
-
   @Before
   public void init() {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     currentNamespace = session.getNamespace();
     client.pods().inNamespace(currentNamespace).delete();
 
@@ -132,18 +132,18 @@ public class PodIT {
       .writingOutput(out).withTTY().usingListener(new ExecListener() {
         @Override
         public void onOpen(Response response) {
-          logger.info("Shell was opened");
+          //logger.info("Shell was opened");
         }
 
         @Override
         public void onFailure(Throwable throwable, Response response) {
-          logger.info("Shell barfed");
+          //logger.info("Shell barfed");
           execLatch.countDown();
         }
 
         @Override
         public void onClose(int i, String s) {
-          logger.info("Shell closed");
+          //logger.info("Shell closed");
           execLatch.countDown();
         }
       }).exec("date");

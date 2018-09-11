@@ -22,6 +22,7 @@ import io.fabric8.kubernetes.api.model.rbac.KubernetesClusterRoleBindingList;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesRoleRefBuilder;
 import io.fabric8.kubernetes.api.model.rbac.KubernetesSubjectBuilder;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -30,6 +31,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -51,6 +55,8 @@ public class KubernetesClusterRoleBindingIT {
   @Before
   public void init() {
 
+
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     // Do not run tests on opeshift 3.6.0 and 3.6.1
     assumeFalse(client.getVersion().getMajor().equalsIgnoreCase("1")
       && client.getVersion().getMinor().startsWith("6"));

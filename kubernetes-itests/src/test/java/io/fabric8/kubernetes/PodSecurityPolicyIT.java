@@ -20,6 +20,7 @@ import io.fabric8.kubernetes.api.model.extensions.PodSecurityPolicy;
 import io.fabric8.kubernetes.api.model.extensions.PodSecurityPolicyBuilder;
 import io.fabric8.kubernetes.api.model.extensions.PodSecurityPolicyList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -34,6 +35,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RunWith(ArquillianConditionalRunner.class)
 @RequiresKubernetes
@@ -50,6 +53,7 @@ public class PodSecurityPolicyIT {
   @Before
   public void init(){
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     podSecurityPolicy = new PodSecurityPolicyBuilder().withNewMetadata()
       .withName("test-example")
       .addToLabels("foo","bar")

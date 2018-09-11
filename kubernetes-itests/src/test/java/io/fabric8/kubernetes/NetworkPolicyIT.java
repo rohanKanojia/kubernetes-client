@@ -24,6 +24,7 @@ import io.fabric8.kubernetes.api.model.networking.NetworkPolicyPeerBuilder;
 import io.fabric8.kubernetes.api.model.networking.NetworkPolicyPortBuilder;
 import io.fabric8.kubernetes.api.model.networking.NetworkPolicyList;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -34,6 +35,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -54,6 +57,7 @@ public class NetworkPolicyIT {
   @Before
   public void init(){
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     networkPolicy = new NetworkPolicyBuilder()
       .withNewMetadata()
       .withName("networkpolicy")

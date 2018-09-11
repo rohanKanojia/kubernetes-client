@@ -18,6 +18,7 @@ package io.fabric8.kubernetes;
 
 import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.client.KubernetesClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
@@ -28,6 +29,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +53,7 @@ public class ReplicationControllerIT {
   @Before
   public void init() {
     currentNamespace = session.getNamespace();
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     rc1 = new ReplicationControllerBuilder()
       .withNewMetadata().withName("nginx-controller").addToLabels("server", "nginx").endMetadata()
       .withNewSpec().withReplicas(3)

@@ -19,17 +19,18 @@ package io.fabric8.kubernetes;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.client.*;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.kubernetes.api.Session;
 import org.arquillian.cube.kubernetes.impl.requirement.RequiresKubernetes;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertTrue;
 
@@ -43,10 +44,9 @@ public class WatchIT {
   @ArquillianResource
   Session session;
 
-  private static final Logger logger = LoggerFactory.getLogger(WatchIT.class);
-
   @Test
   public void testWatch() throws InterruptedException {
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     String currentNamespace = session.getNamespace();
     Pod pod1 = new PodBuilder()
       .withNewMetadata().withName("sample-watch-pod").endMetadata()
@@ -67,13 +67,13 @@ public class WatchIT {
 
         if (action.equals(Action.MODIFIED))
           modifyLatch.countDown();
-        logger.info("Action : {} Pod name : {}", action.name(), pod.getMetadata().getName());
+        //logger.info("Action : {} Pod name : {}", action.name(), pod.getMetadata().getName());
       }
 
       @Override
       public void onClose(KubernetesClientException e) {
         closeLatch.countDown();
-        logger.info("watch closed...");
+        //logger.info("watch closed...");
       }
     });
 

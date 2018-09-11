@@ -17,6 +17,7 @@ package io.fabric8.openshift;
 
 import io.fabric8.openshift.api.model.*;
 import io.fabric8.openshift.client.OpenShiftClient;
+import okhttp3.OkHttpClient;
 import org.arquillian.cube.openshift.impl.requirement.RequiresOpenshift;
 import org.arquillian.cube.requirement.ArquillianConditionalRunner;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -24,6 +25,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 
@@ -37,6 +41,7 @@ public class ImageStreamTagIT {
   @Before
   public void init() throws InterruptedException {
 
+    Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
     ImageStreamTag istag = new ImageStreamTagBuilder().withNewMetadata().withName("bar1:1.0.12").endMetadata()
       .withNewTag()
       .withNewFrom()
