@@ -132,6 +132,7 @@
   </properties>
 
   <modules>
+    <module>kubernetes-model</module>
     <module>kubernetes-client</module>
     <module>kubernetes-server-mock</module>
     <module>openshift-client</module>
