@@ -26,7 +26,7 @@ check_if_tagged
 proceed=$?
 if [ $proceed -eq '0' ]
 then
-    exit
+    exit 0
 fi
 
 setup
