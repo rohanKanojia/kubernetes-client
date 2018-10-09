@@ -20,9 +20,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>9</version>
+    <groupId>io.fabric8</groupId>
+    <artifactId>kubernetes-client-project</artifactId>
+    <version>4.0-SNAPSHOT</version>
   </parent>
 
   <groupId>io.fabric8</groupId>
@@ -100,10 +100,8 @@
 
     <sundrio.version>0.7.1</sundrio.version>
     <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-    <jackson2.version>2.7.5</jackson2.version>
     <jsonschema2pojo.version>0.4.23</jsonschema2pojo.version>
     <junit.version>4.12</junit.version>
-    <validation-api.version>1.1.0.Final</validation-api.version>
     <lombok.version>1.16.10</lombok.version>
   </properties>
 
@@ -117,12 +115,12 @@
       <dependency>
         <groupId>com.fasterxml.jackson.module</groupId>
         <artifactId>jackson-module-jaxb-annotations</artifactId>
-        <version>${jackson2.version}</version>
+        <version>${jackson.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.validation</groupId>
         <artifactId>validation-api</artifactId>
-        <version>${validation-api.version}</version>
+        <version>${validation.api.version}</version>
       </dependency>
       <dependency>
         <groupId>io.sundr</groupId>
@@ -184,7 +182,6 @@
               <Scm-Url>${project.scm.url}</Scm-Url>
               <Scm-Connection>${project.scm.connection}</Scm-Connection>
               <Scm-Revision>${buildNumber}</Scm-Revision>
-              <Build-Timestamp>${build.datetime}</Build-Timestamp>
             </manifestEntries>
           </archive>
         </configuration>
@@ -236,26 +233,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <version>${maven.enforcer.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>enforce-versions</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireMavenVersion>
-                  <version>${maven.version}</version>
-                </requireMavenVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
       </plugin>
       <plugin>
@@ -283,12 +260,6 @@
   </build>
 
   <profiles>
-    <profile>
-      <id>site</id>
-      <modules>
-        <module>website</module>
-      </modules>
-    </profile>
     <profile>
       <id>distro</id>
       <modules>
