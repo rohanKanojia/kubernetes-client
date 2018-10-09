@@ -20,4 +20,5 @@ io.fabric8.kubernetes.client.ExtensionsAPIGroupExtensionAdapter
 io.fabric8.kubernetes.client.BatchAPIGroupExtensionAdapter
 io.fabric8.kubernetes.client.NetworkAPIGroupExtensionAdapter
 io.fabric8.kubernetes.client.StorageAPIGroupExtensionAdapter
+io.fabric8.kubernetes.client.PolicyAPIGroupExtensionAdapter
 io.fabric8.kubernetes.client.RbacAPIGroupExtensionAdapter
