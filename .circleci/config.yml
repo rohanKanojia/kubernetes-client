@@ -218,8 +218,7 @@ jobs:
       - checkout
       - run:
           command: |
-            echo $PUBRING
-            echo $SECRING
+            sh ./scripts/prepare-environment.sh
 
 workflows:
   version: 2
