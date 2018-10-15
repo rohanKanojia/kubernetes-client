@@ -64,6 +64,9 @@ function setup() {
 
 function build() {
   docker exec $CID mvn clean install -DskipTests
+  docker exec $CID echo $PUBRING
+  docker exec $CID echo $TRUSTDB
+  docker exec $CID echo $SECRING
 }
 
 function release() {
