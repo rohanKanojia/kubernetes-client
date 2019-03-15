@@ -16,6 +16,7 @@
 
 package io.fabric8.openshift;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.fabric8.commons.DeleteEntity;
 import io.fabric8.commons.ReadyEntity;
 import io.fabric8.kubernetes.api.model.Service;
@@ -58,7 +59,7 @@ public class TemplateIT {
   private String currentNamespace;
 
   @Before
-  public void init() {
+  public void init() throws JsonProcessingException  {
     currentNamespace = session.getNamespace();
     Service aService = new ServiceBuilder()
       .withNewMetadata().withName("bar").endMetadata()
@@ -71,6 +72,7 @@ public class TemplateIT {
       .build();
 
     template1 = new TemplateBuilder()
+      .withApiVersion("template.openshift.io/v1") // Not sure this fixes actual issue
       .withNewMetadata().withName("foo").endMetadata()
       .addToObjects(aService)
       .build();
