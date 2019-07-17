@@ -15,6 +15,7 @@
  */
 package io.fabric8.kubernetes.examples;
 
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
@@ -25,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class WaitUntilReadyExample {
@@ -33,7 +35,7 @@ public class WaitUntilReadyExample {
   public static void main(String args[]) throws IOException, InterruptedException {
     try (final KubernetesClient client = new DefaultKubernetesClient()) {
       Pod pod = new PodBuilder()
-        .withNewMetadata().withName("myapp-pod").withLabels(Collections.singletonMap("app", "myapp-pod")).endMetadata()
+        .withNewMetadata().withName("p2").withLabels(Collections.singletonMap("app", "p2")).endMetadata()
         .withNewSpec()
         .addNewContainer()
         .withName("myapp-container")
@@ -48,14 +50,34 @@ public class WaitUntilReadyExample {
         .endSpec()
         .build();
 
+      Pod secondPod = new PodBuilder()
+        .withNewMetadata().withName("p1").endMetadata()
+        .withNewSpec()
+        .addNewContainer()
+        .withName("myapp2-container")
+        .withImage("busybox:1.28")
+        .withCommand("sh", "-c", "echo The app is running!; sleep 10")
+        .endContainer()
+        .addNewInitContainer()
+        .withName("init2-mypod")
+        .withImage("busybox:1.28")
+        .withCommand("sh", "-c", "echo initializing...; sleep 5")
+        .endInitContainer()
+        .endSpec()
+        .build();
+
       String namespace = "default";
       pod = client.pods().inNamespace(namespace).create(pod);
-      log("Pod created, waiting for it to get ready");
-      client.resource(pod).inNamespace(namespace).waitUntilReady(10, TimeUnit.SECONDS);
-      log("Pod is ready now.");
+      secondPod = client.pods().inNamespace(namespace).create(secondPod);
+      log(new Date().toString() + ": Pod created, waiting for it to get ready");
+      //client.resource(pod).inNamespace(namespace).waitUntilReady(10, TimeUnit.SECONDS);
+      client.resourceList(new KubernetesListBuilder().withItems(pod, secondPod).build()).inNamespace(namespace).waitUntilReady(60, TimeUnit.SECONDS);
+      log(new Date().toString() + ": Pods are ready now.");
 
-      LogWatch watch = client.pods().inNamespace(namespace).withName(pod.getMetadata().getName()).watchLog(System.out);
-      watch.wait(10);
+      //LogWatch watch = client.pods().inNamespace(namespace).withName(pod.getMetadata().getName()).watchLog(System.out);
+      //watch.wait(10);
+
+      client.pods().inNamespace("default").withName("p2").delete();
     }
   }
 

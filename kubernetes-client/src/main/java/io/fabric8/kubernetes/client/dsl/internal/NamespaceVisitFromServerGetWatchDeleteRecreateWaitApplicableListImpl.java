@@ -82,7 +82,39 @@ Waitable<List<HasMetadata>, HasMetadata>, Readiable {
 
   @Override
   public List<HasMetadata> waitUntilReady(final long amount, final TimeUnit timeUnit) throws InterruptedException {
-    return waitUntilCondition(Objects::nonNull, amount, timeUnit);
+    List<HasMetadata> items = acceptVisitors(asHasMetadata(item, true), visitors);
+    if (items.size() == 0) {
+      return Collections.emptyList();
+    }
+
+    final List<HasMetadata> result = new ArrayList<>();
+    final List<HasMetadata> itemsWithConditionNotMatched = new ArrayList<>(items);
+    final int size = items.size();
+    final AtomicInteger conditionMatched = new AtomicInteger(0);
+    final ExecutorService executor = Executors.newFixedThreadPool(size);
+
+    try {
+      final CountDownLatch latch = new CountDownLatch(size);
+      for (final HasMetadata meta : items) {
+        final ResourceHandler<HasMetadata, HasMetadataVisitiableBuilder> h = handlerOf(meta);
+        executor.submit(() -> {
+          try {
+            result.add(h.waitUntilReady(client, config, meta.getMetadata().getNamespace(), meta, amount, timeUnit));
+          } catch (Throwable t) {
+            //consider all errors as not ready.
+            LOGGER.warn("Error while waiting for: [" + meta.getKind() + "] with name: [" + meta.getMetadata().getName() + "] in namespace: [" + meta.getMetadata().getNamespace() + "]: " + t.getMessage()+ ". The resource will be considered not ready.");
+            LOGGER.debug("The error stack trace:", t);
+          } finally {
+            //We don't want to wait for items that will never become ready
+            latch.countDown();
+          }
+        });
+        latch.await(amount, timeUnit);
+      }
+    } finally {
+      executor.shutdown();
+    }
+    return result;
   }
   
   @Override
