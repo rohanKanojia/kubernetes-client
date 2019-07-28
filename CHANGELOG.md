@@ -11,6 +11,7 @@
   New Feature
   * Knative extension
   * Tekton extension
+  * Increased OpenShift 4.x compatibility
 
 ### 4.3.1 (19-07-2019)
   Bugs
