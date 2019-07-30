@@ -59,6 +59,21 @@ public class OpenShiftOperation<T extends HasMetadata, L extends KubernetesResou
     return OpenShiftConfig.wrap(super.getConfig());
   }
 
+  @Override
+  public URL getRootUrl() {
+    OpenShiftConfig config = OpenShiftConfig.wrap(context.getConfig());
+    OpenShiftClient oc = new DefaultOpenShiftClient(context.getClient(), config);
+    if (config.isOpenShiftAPIGroups(oc)) {
+      return super.getRootUrl();
+    } else {
+      try {
+        return new URL(OpenShiftConfig.wrap(getConfig()).getOpenShiftUrl());
+      } catch (MalformedURLException e) {
+        throw KubernetesClientException.launderThrowable(e);
+      }
+    }
+  }
+
   protected Class<? extends Config> getConfigType() {
     return OpenShiftConfig.class;
   }
