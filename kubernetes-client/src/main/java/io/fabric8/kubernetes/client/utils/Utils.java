@@ -60,6 +60,17 @@ public class Utils {
     return ref;
   }
 
+  public static <T> boolean isNotNull(T[] refList) {
+    if (refList != null) {
+      for (T ref : refList) {
+        if (ref != null) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   public static String getSystemPropertyOrEnvVar(String systemPropertyName, String envVarName, String defaultValue) {
     String answer = System.getProperty(systemPropertyName);
     if (isNotNullOrEmpty(answer)) {
