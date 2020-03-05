@@ -24,7 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UtilsTest {
 
@@ -58,6 +60,33 @@ public class UtilsTest {
   @Test
   public void missingEnvVarShouldReturnDefaultValue() {
     assertEquals(true, Utils.getSystemPropertyOrEnvVar("DONT_EXIST", true));
+  }
+
+  @Test
+  @DisplayName("isNotNull, null, should return false")
+  public void isNotNullNullTest() {
+    // When
+    final boolean result = Utils.isNotNull((Object)null);
+    // Then
+    assertFalse(result);
+  }
+
+  @Test
+  @DisplayName("isNotNull, some null values, should return false")
+  public void isNotNullSomeAreNullTest() {
+    // When
+    final boolean result = Utils.isNotNull("Not Null", null);
+    // Then
+    assertFalse(result);
+  }
+
+  @Test
+  @DisplayName("isNotNull, no null values, should return true")
+  public void isNotNullNoneAreNullTest() {
+    // When
+    final boolean result = Utils.isNotNull("Not Null", "Not Null either");
+    // Then
+    assertTrue(result);
   }
 
   @Test

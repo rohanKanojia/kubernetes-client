@@ -60,17 +60,6 @@ public class Utils {
     return ref;
   }
 
-  public static <T> boolean isNotNull(T[] refList) {
-    if (refList != null) {
-      for (T ref : refList) {
-        if (ref != null) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   public static String getSystemPropertyOrEnvVar(String systemPropertyName, String envVarName, String defaultValue) {
     String answer = System.getProperty(systemPropertyName);
     if (isNotNullOrEmpty(answer)) {
@@ -295,6 +284,12 @@ public class Utils {
       }
     }
     return text;
+  }
+
+  public static <T> boolean isNotNull(T... refList) {
+    return Optional.ofNullable(refList)
+      .map(refs -> Stream.of(refs).allMatch(Objects::nonNull))
+      .orElse(false);
   }
 
   public static boolean isNullOrEmpty(String str) {
