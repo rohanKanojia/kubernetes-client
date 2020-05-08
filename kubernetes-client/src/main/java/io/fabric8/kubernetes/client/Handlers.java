@@ -49,7 +49,7 @@ public final class Handlers {
   }
 
   public static <T extends HasMetadata, V extends VisitableBuilder<T, V>> ResourceHandler<T, V> get(String kind, String apiVersion) {
-    return get(kind, apiVersion, Thread.currentThread().getContextClassLoader());
+    return get(kind, apiVersion, ClassLoader.getSystemClassLoader());
   }
 
   public static <T extends HasMetadata, V extends VisitableBuilder<T, V>> ResourceHandler<T, V> get(String kind, String apiVersion, ClassLoader classLoader) {
