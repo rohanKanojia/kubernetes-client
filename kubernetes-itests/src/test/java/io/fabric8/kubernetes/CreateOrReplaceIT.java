@@ -17,6 +17,7 @@ package io.fabric8.kubernetes;
 
 import io.fabric8.kubernetes.api.model.ConfigMap;
 import io.fabric8.kubernetes.api.model.ConfigMapBuilder;
+import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.Secret;
 import io.fabric8.kubernetes.api.model.SecretBuilder;
@@ -36,12 +37,18 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(ArquillianConditionalRunner.class)
 @RequiresKubernetes
@@ -230,6 +237,98 @@ public class CreateOrReplaceIT {
 
     // Cleanup
     client.network().ingresses().inNamespace(session.getNamespace()).withName(ingress.getMetadata().getName()).delete();
+  }
+
+  @Test
+  public void testCreateOrReplaceGenericResource() {
+    // Given
+    ConfigMap configMap = new ConfigMapBuilder()
+      .withNewMetadata().withName("resource-cm-1").endMetadata()
+      .addToData("a1", "A1")
+      .addToData("a2", "A2")
+      .build();
+
+    // When
+    ConfigMap createdResource = client.resource(configMap).inNamespace(session.getNamespace()).createOrReplace();
+    configMap.setData(Collections.singletonMap("b1", "B1"));
+    ConfigMap replacedResource = client.resource(configMap).inNamespace(session.getNamespace()).createOrReplace();
+
+    // Then
+    assertNotNull(createdResource);
+    assertEquals(2, createdResource.getData().size());
+    assertEquals("A1", createdResource.getData().get("a1"));
+    assertEquals("A2", createdResource.getData().get("a2"));
+    assertNotNull(replacedResource);
+    assertEquals(1, replacedResource.getData().size());
+    assertEquals("B1", replacedResource.getData().get("b1"));
+    // Cleanup
+    client.resource(configMap).inNamespace(session.getNamespace()).delete();
+  }
+
+  @Test
+  public void testCreateOrReplaceGenericResourceList() {
+    // Given
+    InputStream resourceListV1 = getClass().getResourceAsStream("/createorreplace-it-testlist-v1.yml");
+    InputStream resourceListV2 = getClass().getResourceAsStream("/createorreplace-it-testlist-v2.yml");
+
+    // When
+    List<HasMetadata> listCreated = client.load(resourceListV1).inNamespace(session.getNamespace()).createOrReplace();
+    List<HasMetadata> listReplaced = client.load(resourceListV2).inNamespace(session.getNamespace()).createOrReplace();
+
+    // Then
+    assertNotNull(listCreated);
+    assertEquals(2, listCreated.size());
+    Optional<HasMetadata> deploymentResult = listCreated.stream().filter(p -> p instanceof Deployment).findFirst();
+    assertTrue(deploymentResult.isPresent());
+    Deployment deployment = (Deployment) deploymentResult.get();
+    assertEquals("nginx:1.16.1", deployment.getSpec().getTemplate().getSpec().getContainers().get(0).getImage());
+
+    assertNotNull(listReplaced);
+    assertEquals(2, listReplaced.size());
+    Optional<HasMetadata> deploymentV2Result = listReplaced.stream().filter(p -> p instanceof Deployment).findFirst();
+    assertTrue(deploymentV2Result.isPresent());
+    Deployment deploymentV2 = (Deployment) deploymentV2Result.get();
+    assertEquals("nginx:stable-alpine", deploymentV2.getSpec().getTemplate().getSpec().getContainers().get(0).getImage());
+
+    // Cleanup
+    client.resourceList(listReplaced).inNamespace(session.getNamespace()).delete();
+  }
+
+  @Test
+  public void testCreateOrReplaceDeletingExisting() {
+    // Given
+    List<HasMetadata> listToCreate = new ArrayList<>();
+    listToCreate.add(new ConfigMapBuilder().withNewMetadata().withName("createorreplace-it-delete-existing-configmap").endMetadata()
+      .addToData("A", "a")
+      .addToData("B", "b")
+      .build());
+    listToCreate.add(new SecretBuilder().withNewMetadata().withName("createorreplace-it-delete-existing-secret").endMetadata()
+      .addToData("USERNAME", "YWRtaW4=")
+      .addToData("PASSWORD", "MWYyZDFlMmU2N2Rm")
+      .build());
+
+    // When
+    List<HasMetadata> listCreated = client.resourceList(listToCreate).inNamespace(session.getNamespace()).createOrReplace();
+    List<HasMetadata> listCreatedAfterDeletingExisting = client.resourceList(listToCreate)
+      .inNamespace(session.getNamespace())
+      .deletingExisting()
+      .createOrReplace();
+
+    // Then
+    assertNotNull(listCreated);
+    assertEquals(2, listCreated.size());
+    listCreated.sort(Comparator.comparing(HasMetadata::getKind));
+
+    assertNotNull(listCreatedAfterDeletingExisting);
+    assertEquals(2, listCreatedAfterDeletingExisting.size());
+    listCreatedAfterDeletingExisting.sort(Comparator.comparing(HasMetadata::getKind));
+    assertEquals(listCreated.get(0).getMetadata().getName(), listCreatedAfterDeletingExisting.get(0).getMetadata().getName());
+    assertNotEquals(listCreated.get(0).getMetadata().getUid(), listCreatedAfterDeletingExisting.get(0).getMetadata().getUid());
+    assertEquals(listCreated.get(1).getMetadata().getName(), listCreatedAfterDeletingExisting.get(1).getMetadata().getName());
+    assertNotEquals(listCreated.get(1).getMetadata().getUid(), listCreatedAfterDeletingExisting.get(1).getMetadata().getUid());
+
+    // Cleanup
+    client.resourceList(listCreatedAfterDeletingExisting).inNamespace(session.getNamespace()).delete();
   }
 
   private String getTestResourcePrefix() {

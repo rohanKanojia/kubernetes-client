@@ -27,6 +27,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -471,5 +472,12 @@ public class Utils {
 
   private static String getOperatingSystemFromSystemProperty() {
     return System.getProperty(OS_NAME);
+  }
+
+  public static boolean isHttpStatusCodeFromErrorEncounteredByServer(int code) {
+    return code == HttpURLConnection.HTTP_INTERNAL_ERROR ||
+      code == HttpURLConnection.HTTP_BAD_GATEWAY ||
+      code == HttpURLConnection.HTTP_UNAVAILABLE ||
+      code == HttpURLConnection.HTTP_VERSION;
   }
 }

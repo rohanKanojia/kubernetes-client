@@ -71,6 +71,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -370,5 +371,14 @@ class UtilsTest {
       assertEquals("sh", commandPrefix.get(0));
       assertEquals("-c", commandPrefix.get(1));
     }
+  }
+
+  @Test
+  void testIsHttpStatusCodeFromErrorEncounteredByServer() {
+    assertTrue(Utils.isHttpStatusCodeFromErrorEncounteredByServer(HttpURLConnection.HTTP_INTERNAL_ERROR));
+    assertTrue(Utils.isHttpStatusCodeFromErrorEncounteredByServer(HttpURLConnection.HTTP_BAD_GATEWAY));
+    assertTrue(Utils.isHttpStatusCodeFromErrorEncounteredByServer(HttpURLConnection.HTTP_UNAVAILABLE));
+    assertTrue(Utils.isHttpStatusCodeFromErrorEncounteredByServer(HttpURLConnection.HTTP_VERSION));
+    assertFalse(Utils.isHttpStatusCodeFromErrorEncounteredByServer(HttpURLConnection.HTTP_NOT_FOUND));
   }
 }

@@ -17,10 +17,10 @@ package io.fabric8.kubernetes.client.dsl.internal;
 
 import io.fabric8.kubernetes.api.model.DeletionPropagation;
 import io.fabric8.kubernetes.api.model.ListOptions;
-import io.fabric8.kubernetes.client.utils.KubernetesResourceUtil;
+import io.fabric8.kubernetes.client.utils.CreateOrReplaceHelper;
 import io.fabric8.kubernetes.client.utils.Utils;
 
-import java.net.HttpURLConnection;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import java.io.ByteArrayInputStream;
@@ -135,29 +135,22 @@ public class NamespaceVisitFromServerGetWatchDeleteRecreateWaitApplicableImpl ex
     HasMetadata meta = acceptVisitors(asHasMetadata(item), visitors);
     ResourceHandler<HasMetadata, HasMetadataVisitiableBuilder> h = handlerOf(meta);
     String namespaceToUse = meta.getMetadata().getNamespace();
-
-    String resourceVersion = KubernetesResourceUtil.getResourceVersion(meta);
-    try {
-      // Create
-      KubernetesResourceUtil.setResourceVersion(meta, null);
-      return h.create(client, config, namespaceToUse, meta);
-    } catch (KubernetesClientException exception) {
-      if (exception.getCode() != HttpURLConnection.HTTP_CONFLICT) {
-        throw exception;
-      }
-
-      // Conflict; check deleteExisting flag otherwise replace
-      if (Boolean.TRUE.equals(deletingExisting)) {
-        Boolean deleted = h.delete(client, config, namespaceToUse, propagationPolicy, meta);
-        if (Boolean.FALSE.equals(deleted)) {
-          throw new KubernetesClientException("Failed to delete existing item:" + meta);
+    CreateOrReplaceHelper<HasMetadata> createOrReplaceHelper = new CreateOrReplaceHelper<>(
+      () -> h.create(client, config, namespaceToUse, meta),
+      () -> h.replace(client, config, namespaceToUse, meta),
+      () -> {
+        try {
+          return h.waitUntilCondition(client, config, namespaceToUse, meta, Objects::nonNull, 1, TimeUnit.SECONDS);
+        } catch (InterruptedException interruptedException) {
+          interruptedException.printStackTrace();
         }
-        return h.create(client, config, namespaceToUse, meta);
-      } else {
-        KubernetesResourceUtil.setResourceVersion(meta, resourceVersion);
-        return h.replace(client, config, namespaceToUse, meta);
-      }
-    }
+        return null;
+      },
+      () -> h.delete(client, config, namespaceToUse, propagationPolicy, meta),
+      () -> h.reload(client, config, namespaceToUse, meta)
+    );
+
+    return createOrReplaceHelper.createOrReplace(meta, deletingExisting);
   }
 
   @Override

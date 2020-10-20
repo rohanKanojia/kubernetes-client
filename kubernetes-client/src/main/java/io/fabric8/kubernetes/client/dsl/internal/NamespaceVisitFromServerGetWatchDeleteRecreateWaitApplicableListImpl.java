@@ -34,7 +34,7 @@ import io.fabric8.kubernetes.client.dsl.*;
 import io.fabric8.kubernetes.client.dsl.base.OperationSupport;
 import io.fabric8.kubernetes.client.handlers.KubernetesListHandler;
 import io.fabric8.kubernetes.client.internal.readiness.Readiness;
-import io.fabric8.kubernetes.client.utils.KubernetesResourceUtil;
+import io.fabric8.kubernetes.client.utils.CreateOrReplaceHelper;
 import io.fabric8.kubernetes.client.utils.Serialization;
 import io.fabric8.kubernetes.client.utils.Utils;
 
@@ -45,13 +45,13 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.CountDownLatch;
@@ -285,29 +285,25 @@ Waitable<List<HasMetadata>, HasMetadata>, Readiable {
     List<HasMetadata> result = new ArrayList<>();
     for (HasMetadata meta : acceptVisitors(asHasMetadata(item, true), visitors)) {
       ResourceHandler<HasMetadata, HasMetadataVisitiableBuilder> h = handlerOf(meta);
-      String namespaceToUse =  meta.getMetadata().getNamespace();
-
-      String resourceVersion = KubernetesResourceUtil.getResourceVersion(meta);
-      try {
-        // Create
-        KubernetesResourceUtil.setResourceVersion(meta, null);
-        result.add(h.create(client, config, namespaceToUse, meta));
-      } catch (KubernetesClientException exception) {
-        if (exception.getCode() != HttpURLConnection.HTTP_CONFLICT) {
-          throw exception;
-        }
-
-        // Conflict; check deleteExisting flag otherwise replace
-        if (Boolean.TRUE.equals(deletingExisting)) {
-          Boolean deleted = h.delete(client, config, namespaceToUse, propagationPolicy, meta);
-          if (Boolean.FALSE.equals(deleted)) {
-            throw new KubernetesClientException("Failed to delete existing item:" + meta);
+      String namespaceToUse = meta.getMetadata().getNamespace();
+      CreateOrReplaceHelper<HasMetadata> createOrReplaceHelper = new CreateOrReplaceHelper<>(
+        () -> h.create(client, config, namespaceToUse, meta),
+        () -> h.replace(client, config, namespaceToUse, meta),
+        () -> {
+          try {
+            return h.waitUntilCondition(client, config, namespaceToUse, meta, Objects::nonNull, 1, TimeUnit.SECONDS);
+          } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
           }
-          result.add(h.create(client, config, namespaceToUse, meta));
-        } else {
-          KubernetesResourceUtil.setResourceVersion(meta, resourceVersion);
-          result.add(h.replace(client, config, namespaceToUse, meta));
-        }
+          return null;
+        },
+        () -> h.delete(client, config, namespaceToUse, propagationPolicy, meta),
+        () -> h.reload(client, config, namespaceToUse, meta)
+      );
+
+      HasMetadata createdItem =  createOrReplaceHelper.createOrReplace(meta, deletingExisting);
+      if (createdItem != null) {
+        result.add(createdItem);
       }
     }
     return result;
