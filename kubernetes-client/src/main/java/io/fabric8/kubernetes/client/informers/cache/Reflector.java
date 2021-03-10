@@ -21,9 +21,11 @@ import io.fabric8.kubernetes.api.model.ListOptionsBuilder;
 import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.dsl.base.OperationContext;
 import io.fabric8.kubernetes.client.informers.ListerWatcher;
+import io.fabric8.kubernetes.client.informers.SharedInformerEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -48,11 +50,11 @@ public class Reflector<T extends HasMetadata, L extends KubernetesResourceList<T
   private final AtomicBoolean isWatcherStarted;
   private final AtomicReference<Watch> watch;
 
-  public Reflector(Class<T> apiTypeClass, ListerWatcher<T, L> listerWatcher, Store store, OperationContext operationContext, long resyncPeriodMillis) {
-    this(apiTypeClass, listerWatcher, store, operationContext, resyncPeriodMillis, Executors.newSingleThreadScheduledExecutor());
+  public Reflector(Class<T> apiTypeClass, ListerWatcher<T, L> listerWatcher, Store store, OperationContext operationContext, long resyncPeriodMillis, ConcurrentLinkedQueue<SharedInformerEventListener> eventListeners) {
+    this(apiTypeClass, listerWatcher, store, operationContext, resyncPeriodMillis, eventListeners, Executors.newSingleThreadScheduledExecutor());
   }
 
-  public Reflector(Class<T> apiTypeClass, ListerWatcher<T, L> listerWatcher, Store store, OperationContext operationContext, long resyncPeriodMillis, ScheduledExecutorService resyncExecutor) {
+  public Reflector(Class<T> apiTypeClass, ListerWatcher<T, L> listerWatcher, Store store, OperationContext operationContext, long resyncPeriodMillis, ConcurrentLinkedQueue<SharedInformerEventListener> eventListeners, ScheduledExecutorService resyncExecutor) {
     this.apiTypeClass = apiTypeClass;
     this.listerWatcher = listerWatcher;
     this.store = store;
@@ -60,7 +62,7 @@ public class Reflector<T extends HasMetadata, L extends KubernetesResourceList<T
     this.resyncPeriodMillis = resyncPeriodMillis;
     this.lastSyncResourceVersion = new AtomicReference<>();
     this.resyncExecutor = resyncExecutor;
-    this.watcher = new ReflectorWatcher<>(store, lastSyncResourceVersion, this::startWatcher, this::reListAndSync);
+    this.watcher = new ReflectorWatcher<>(store, lastSyncResourceVersion, this::startWatcher, this::reListAndSync, eventListeners);
     this.isActive = new AtomicBoolean(true);
     this.isWatcherStarted = new AtomicBoolean(false);
     this.watch = new AtomicReference<>(null);

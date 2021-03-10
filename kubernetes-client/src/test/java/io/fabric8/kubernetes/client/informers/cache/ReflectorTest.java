@@ -23,6 +23,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -64,7 +65,7 @@ class ReflectorTest {
     ListerWatcher<Pod, PodList> listerWatcher = Mockito.mock(ListerWatcher.class, Mockito.RETURNS_DEEP_STUBS);
     Store store = Mockito.mock(Store.class, Mockito.RETURNS_DEEP_STUBS);
     OperationContext operationContext = Mockito.mock(OperationContext.class, Mockito.RETURNS_DEEP_STUBS);
-    Reflector<Pod, PodList> reflector = new Reflector<>(Pod.class, listerWatcher, store, operationContext, resyncPeriodMillis, executorService);
+    Reflector<Pod, PodList> reflector = new Reflector<>(Pod.class, listerWatcher, store, operationContext, resyncPeriodMillis, new ConcurrentLinkedQueue<>(), executorService);
     return reflector;
   }
 }

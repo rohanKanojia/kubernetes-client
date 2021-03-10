@@ -19,10 +19,12 @@ import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
+import io.fabric8.kubernetes.client.informers.SharedInformerEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
@@ -33,12 +35,14 @@ public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
   private final AtomicReference<String> lastSyncResourceVersion;
   private final Runnable onClose;
   private final Runnable onHttpGone;
+  private final ConcurrentLinkedQueue<SharedInformerEventListener> eventListeners;
 
-  public ReflectorWatcher(Store<T> store, AtomicReference<String> lastSyncResourceVersion, Runnable onClose, Runnable onHttpGone) {
+  public ReflectorWatcher(Store<T> store, AtomicReference<String> lastSyncResourceVersion, Runnable onClose, Runnable onHttpGone, ConcurrentLinkedQueue<SharedInformerEventListener> eventListeners) {
     this.store = store;
     this.lastSyncResourceVersion = lastSyncResourceVersion;
     this.onClose = onClose;
     this.onHttpGone = onHttpGone;
+    this.eventListeners = eventListeners;
   }
 
   @Override
@@ -71,13 +75,17 @@ public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
   @Override
   public void onClose(WatcherException exception) {
     log.error("Watch closing");
+    eventListeners.forEach(listener -> listener.onException(exception));
     Optional.ofNullable(exception)
       .map(e -> {
         log.debug("Exception received during watch", e);
         return exception;
       })
       .filter(WatcherException::isHttpGone)
-      .ifPresent(c -> onHttpGone.run());
+      .ifPresent(c -> {
+        log.debug("HTTP_GONE received.. restarting watcher");
+        onHttpGone.run();
+      });
     onClose.run();
   }
 
