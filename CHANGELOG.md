@@ -21,6 +21,7 @@
 * Fix #2980: Add DSL Support for `apps/v1#ControllerRevision` resource
 * Fix #2981: Add DSL support for `storage.k8s.io/v1beta1` CSIDriver, CSINode and VolumeAttachment
 * Fix #2912: Add DSL support for `storage.k8s.io/v1beta1` CSIStorageCapacity
+* Fix #2565: Add support for CertManager extension
 
 #### _**Note**_: Breaking changes in the API
 ##### DSL Changes:

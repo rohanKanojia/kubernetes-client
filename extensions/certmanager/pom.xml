@@ -16,26 +16,25 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>kubernetes-client-project</artifactId>
+    <artifactId>kubernetes-extensions</artifactId>
     <groupId>io.fabric8</groupId>
-    <version>5.4-SNAPSHOT</version>
+    <version>5.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kubernetes-extensions</artifactId>
+  <artifactId>certmanager</artifactId>
   <packaging>pom</packaging>
-  <name>Fabric8 :: Kubernetes :: Extensions</name>
+  <name>Fabric8 :: Cert Manager :: Extension</name>
 
   <modules>
-    <module>knative</module>
-    <module>tekton</module>
-    <module>service-catalog</module>
-    <module>volumesnapshot</module>
-    <module>chaosmesh</module>
-    <module>camel-k</module>
-    <module>certmanager</module>
+    <module>model</module>
+    <module>client</module>
+    <module>mock</module>
+    <module>examples</module>
+    <module>tests</module>
   </modules>
 
 </project>
