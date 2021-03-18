@@ -140,6 +140,39 @@
                 <delete
                   file="${project.build.directory}/generated-sources/io/fabric8/certmanager/api/model/acme/v1/ACMEChallengeSolverHTTP01Ingress.java"
                   verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableVolume.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableObjectMeta.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableContainer.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableContainerPort.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableVolumeMount.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableLabelSelector.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/kubernetes/api/model/EditableEnvVar.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/certmanager/api/model/acme/v1/ACMEChallengeSolverHTTP01IngressFluentImpl.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/certmanager/api/model/acme/v1/ACMEChallengeSolverHTTP01IngressFluent.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/certmanager/api/model/acme/v1/ACMEChallengeSolverHTTP01IngressBuilder.java"
+                  verbose="true" />
+                <delete
+                  file="${project.build.directory}/generated-sources/io/fabric8/certmanager/api/model/acme/v1/EditableACMEChallengeSolverHTTP01Ingress.java"
+                  verbose="true" />
               </target>
             </configuration>
             <goals>

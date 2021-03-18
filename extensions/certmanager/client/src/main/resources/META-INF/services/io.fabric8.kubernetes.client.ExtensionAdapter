@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-VolumeSnapshotExtensionAdapter
+io.fabric8.certmanager.client.CertManagerExtensionAdapter

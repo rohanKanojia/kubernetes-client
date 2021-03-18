@@ -13,6 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *#
-#foreach ($i in ${model.values()})
-io.fabric8.volumesnapshot.client.handlers.${i.name}Handler
+#foreach ($m in ${model.values()})
+  #set ($group = $m.getPackageName().split("\.")[3])
+  #set ($annotations = $m.annotations)
+  #foreach ($annotation in $annotations)
+    #if ($annotation.getClassRef().getName().endsWith("Version"))
+      #set ($version = $annotation.getParameters().get("value"))
+    #end
+  #end
+
+io.fabric8.certmanager.client.${group}.${version}.handlers.${m.name}Handler
 #end

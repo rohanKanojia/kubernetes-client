@@ -18,9 +18,8 @@ package main
 import (
 	"fmt"
 	"github.com/fabric8io/kubernetes-client/generator/pkg/schemagen"
+	certmanageracme "github.com/jetstack/cert-manager/pkg/apis/acme/v1"
 	certmanager "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1"
-	metav1 "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
-	certmanageracme	"github.com/jetstack/cert-manager/pkg/apis/acme/v1"
 	apiextensions "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"reflect"
@@ -31,12 +30,12 @@ func main() {
 	// the CRD List types for which the model should be generated
 	// no other types need to be defined as they are auto discovered
 	crdLists := map[reflect.Type]schemagen.CrdScope{
-		reflect.TypeOf(certmanager.CertificateList{}): schemagen.Namespaced,
+		reflect.TypeOf(certmanager.CertificateList{}):        schemagen.Namespaced,
 		reflect.TypeOf(certmanager.CertificateRequestList{}): schemagen.Namespaced,
-		reflect.TypeOf(certmanager.IssuerList{}): schemagen.Namespaced,
-		reflect.TypeOf(certmanager.ClusterIssuerList{}): schemagen.Cluster,
-		reflect.TypeOf(certmanageracme.ChallengeList{}): schemagen.Namespaced,
-		reflect.TypeOf(certmanageracme.OrderList{}): schemagen.Namespaced,
+		reflect.TypeOf(certmanager.IssuerList{}):             schemagen.Namespaced,
+		reflect.TypeOf(certmanager.ClusterIssuerList{}):      schemagen.Cluster,
+		reflect.TypeOf(certmanageracme.ChallengeList{}):      schemagen.Namespaced,
+		reflect.TypeOf(certmanageracme.OrderList{}):          schemagen.Namespaced,
 	}
 
 	// constraints and patterns for fields
@@ -58,23 +57,20 @@ func main() {
 	// optional ApiGroup and ApiVersion for the go package (which is added to the generated java class)
 	packageMapping := map[string]schemagen.PackageInformation{
 		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1": {JavaPackage: "io.fabric8.certmanager.api.model.v1", ApiGroup: "cert-manager.io", ApiVersion: "v1"},
-		"github.com/jetstack/cert-manager/pkg/apis/acme/v1": {JavaPackage: "io.fabric8.certmanager.api.model.acme.v1", ApiGroup: "cert-manager.io", ApiVersion: "v1"},
-		"github.com/jetstack/cert-manager/pkg/apis/meta/v1": {JavaPackage: "io.fabric8.certmanager.api.model.meta.v1", ApiGroup: "cert-manager.io", ApiVersion: "v1"},
+		"github.com/jetstack/cert-manager/pkg/apis/acme/v1":        {JavaPackage: "io.fabric8.certmanager.api.model.acme.v1", ApiGroup: "cert-manager.io", ApiVersion: "v1"},
+		"github.com/jetstack/cert-manager/pkg/apis/meta/v1":        {JavaPackage: "io.fabric8.certmanager.api.model.meta.v1", ApiGroup: "cert-manager.io", ApiVersion: "v1"},
 	}
 
 	// converts all packages starting with <key> to a java package using an automated scheme:
 	//  - replace <key> with <value> aka "package prefix"
 	//  - replace '/' with '.' for a valid java package name
 	// e.g. knative.dev/eventing/pkg/apis/messaging/v1beta1/ChannelTemplateSpec is mapped to "io.fabric8.knative.internal.eventing.pkg.apis.messaging.v1beta1.ChannelTemplateSpec"
-	mappingSchema := map[string]string{
-	}
+	mappingSchema := map[string]string{}
 
 	// overwriting some times
 	manualTypeMap := map[reflect.Type]string{
-		reflect.TypeOf(v1.Time{}):                  "java.lang.String",
-		reflect.TypeOf(metav1.ObjectReference{}):   "java.lang.String",
-		reflect.TypeOf(metav1.SecretKeySelector{}): "java.lang.String",
-                reflect.TypeOf(apiextensions.JSON{}): "com.fasterxml.jackson.databind.JsonNode",
+		reflect.TypeOf(v1.Time{}):            "java.lang.String",
+		reflect.TypeOf(apiextensions.JSON{}): "com.fasterxml.jackson.databind.JsonNode",
 	}
 
 	json := schemagen.GenerateSchema("http://fabric8.io/jetstack/CertManagerSchema#", crdLists, providedPackages, manualTypeMap, packageMapping, mappingSchema, providedTypes, constraints)
