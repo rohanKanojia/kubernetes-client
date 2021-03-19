@@ -21,8 +21,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.fabric8</groupId>
-    <artifactId>certmanager</artifactId>
-    <version>5.3-SNAPSHOT</version>
+    <artifactId>certmanager-extension-pom</artifactId>
+    <version>5.4-SNAPSHOT</version>
   </parent>
 
   <artifactId>certmanager-client</artifactId>
@@ -30,7 +30,6 @@
   <name>Fabric8 :: Cert Manager :: Client</name>
 
   <properties>
-    <useIncrementalCompilation>false</useIncrementalCompilation>
     <osgi.require-capability>
       osgi.extender;
       filter:="(osgi.extender=osgi.serviceloader.registrar)"
@@ -47,30 +46,13 @@
     <osgi.export>
       io.fabric8.certmanager.client.*
     </osgi.export>
-<!--    <osgi.include.resources>-->
-<!--      /META-INF/services/io.fabric8.kubernetes.client.ExtensionAdapter=target/classes/META-INF/services/io.fabric8.kubernetes.client.ExtensionAdapter,-->
-<!--      /META-INF/services/io.fabric8.kubernetes.client.ResourceHandler=target/classes/META-INF/services/io.fabric8.kubernetes.client.ResourceHandler-->
-<!--    </osgi.include.resources>-->
+    <osgi.include.resources>
+      /META-INF/services/io.fabric8.kubernetes.client.ExtensionAdapter=target/classes/META-INF/services/io.fabric8.kubernetes.client.ExtensionAdapter,
+      /META-INF/services/io.fabric8.kubernetes.client.ResourceHandler=target/classes/META-INF/services/io.fabric8.kubernetes.client.ResourceHandler
+    </osgi.include.resources>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>certmanager-model</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>kubernetes-client</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.sundr</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
     <dependency>
       <groupId>io.sundr</groupId>
       <artifactId>builder-annotations</artifactId>
@@ -80,8 +62,28 @@
       <artifactId>transform-annotations</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
+      <groupId>io.fabric8</groupId>
+      <artifactId>certmanager-model-v1alpha2</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>certmanager-model-v1alpha3</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>certmanager-model-v1beta1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>certmanager-model-v1</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>kubernetes-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -92,6 +94,11 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-migrationsupport</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
@@ -107,87 +114,6 @@
         <configuration>
           <passphrase>4uds0n</passphrase>
           <useAgent>true</useAgent>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>io.sundr</groupId>
-        <artifactId>sundr-maven-plugin</artifactId>
-        <version>${sundrio.version}</version>
-        <configuration>
-          <boms>
-            <bom>
-              <artifactId>certmanager-java-api-bom</artifactId>
-              <name>Fabric8 :: Cert Manager ::Bom</name>
-              <properties>
-                <skipStagingRepositoryClose>true</skipStagingRepositoryClose>
-              </properties>
-            </bom>
-            <bom>
-              <artifactId>certmanager-java-api-bom-with-deps</artifactId>
-              <name>Fabric8 :: Cert Manager ::Bom with Dependencies</name>
-              <dependencies>
-                <includes>
-                  <include>com.squareup*:*</include>
-                  <include>com.fasterxml.jackson*:*</include>
-                </includes>
-              </dependencies>
-              <properties>
-                <skipStagingRepositoryClose>true</skipStagingRepositoryClose>
-              </properties>
-            </bom>
-          </boms>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate-bom</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>${buildnumber.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>get-build-timestamp</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>create-timestamp</goal>
-            </goals>
-            <configuration>
-              <!-- Example date: Wed, 4 Jul 2001 12:08:56 -0700 -->
-              <timestampFormat>EEE, d MMM yyyy HH:mm:ss Z</timestampFormat>
-              <timestampPropertyName>build.datetime</timestampPropertyName>
-            </configuration>
-          </execution>
-          <execution>
-            <id>get-scm-revision</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-            <configuration>
-              <doCheck>false</doCheck>
-              <doUpdate>false</doUpdate>
-              <revisionOnScmFailure>UNKNOWN</revisionOnScmFailure>
-              <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <configuration>
-          <nonFilteredFileExtensions>
-            <nonFilteredFileExtension>zip</nonFilteredFileExtension>
-            <nonFilteredFileExtension>gz</nonFilteredFileExtension>
-            <nonFilteredFileExtension>jar</nonFilteredFileExtension>
-          </nonFilteredFileExtensions>
         </configuration>
       </plugin>
     </plugins>

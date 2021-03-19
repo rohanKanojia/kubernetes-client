@@ -21,8 +21,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>io.fabric8</groupId>
-    <artifactId>certmanager</artifactId>
-    <version>5.3-SNAPSHOT</version>
+    <artifactId>certmanager-extension-pom</artifactId>
+    <version>5.4-SNAPSHOT</version>
   </parent>
 
   <artifactId>certmanager-examples</artifactId>
@@ -34,6 +34,12 @@
       <artifactId>certmanager-client</artifactId>
       <version>${project.version}</version>
     </dependency>
+      <dependency>
+          <groupId>io.fabric8</groupId>
+          <artifactId>certmanager-model-v1beta1</artifactId>
+          <version>5.3-SNAPSHOT</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
 </project>

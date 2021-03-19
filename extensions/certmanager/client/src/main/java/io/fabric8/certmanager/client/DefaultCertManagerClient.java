@@ -15,33 +15,10 @@
  */
 package io.fabric8.certmanager.client;
 
-import io.fabric8.certmanager.api.model.acme.v1.Challenge;
-import io.fabric8.certmanager.api.model.acme.v1.ChallengeList;
-import io.fabric8.certmanager.api.model.acme.v1.Order;
-import io.fabric8.certmanager.api.model.acme.v1.OrderList;
-import io.fabric8.certmanager.api.model.v1.Certificate;
-import io.fabric8.certmanager.api.model.v1.CertificateList;
-import io.fabric8.certmanager.api.model.v1.CertificateRequest;
-import io.fabric8.certmanager.api.model.v1.CertificateRequestList;
-import io.fabric8.certmanager.api.model.v1.ClusterIssuer;
-import io.fabric8.certmanager.api.model.v1.ClusterIssuerList;
-import io.fabric8.certmanager.api.model.v1.Issuer;
-import io.fabric8.certmanager.api.model.v1.IssuerList;
-import io.fabric8.certmanager.client.api.v1.internal.CertificateOperationsImpl;
-import io.fabric8.certmanager.client.api.v1.internal.CertificateRequestOperationsImpl;
-import io.fabric8.certmanager.client.api.v1.internal.ChallengeOperationsImpl;
-import io.fabric8.certmanager.client.api.v1.internal.ClusterIssuerOperationsImpl;
-import io.fabric8.certmanager.client.api.v1.internal.IssuerOperationsImpl;
-import io.fabric8.certmanager.client.api.v1.internal.OrderOperationsImpl;
-import io.fabric8.kubernetes.client.BaseClient;
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
-import io.fabric8.kubernetes.client.RequestConfig;
-import io.fabric8.kubernetes.client.WithRequestCallable;
+import io.fabric8.certmanager.client.dsl.V1APIGroupDSL;
+import io.fabric8.certmanager.client.dsl.V1beta1APIGroupDSL;
+import io.fabric8.kubernetes.client.*;
 import io.fabric8.kubernetes.client.dsl.FunctionCallable;
-import io.fabric8.kubernetes.client.dsl.MixedOperation;
-import io.fabric8.kubernetes.client.dsl.NonNamespaceOperation;
-import io.fabric8.kubernetes.client.dsl.Resource;
 import okhttp3.OkHttpClient;
 
 public class DefaultCertManagerClient extends BaseClient implements NamespacedCertManagerClient {
@@ -78,32 +55,11 @@ public class DefaultCertManagerClient extends BaseClient implements NamespacedCe
   }
 
   @Override
-  public MixedOperation<Certificate, CertificateList, Resource<Certificate>> certificates() {
-    return new CertificateOperationsImpl(this.getHttpClient(), this.getConfiguration());
-  }
+  public V1APIGroupDSL v1() { return adapt(V1APIGroupClient.class); }
 
   @Override
-  public MixedOperation<CertificateRequest, CertificateRequestList, Resource<CertificateRequest>> certificateRequests() {
-    return new CertificateRequestOperationsImpl(this.getHttpClient(), this.getConfiguration());
+  public V1beta1APIGroupDSL v1beta1() {
+    return adapt(V1beta1APIGroupClient.class);
   }
 
-  @Override
-  public MixedOperation<Issuer, IssuerList, Resource<Issuer>> issuers() {
-    return new IssuerOperationsImpl(this.getHttpClient(), this.getConfiguration());
-  }
-
-  @Override
-  public NonNamespaceOperation<ClusterIssuer, ClusterIssuerList, Resource<ClusterIssuer>> clusterIssuers() {
-    return new ClusterIssuerOperationsImpl(this.getHttpClient(), this.getConfiguration());
-  }
-
-  @Override
-  public MixedOperation<Challenge, ChallengeList, Resource<Challenge>> challenges() {
-    return new ChallengeOperationsImpl(this.getHttpClient(), this.getConfiguration());
-  }
-
-  @Override
-  public MixedOperation<Order, OrderList, Resource<Order>> orders() {
-    return new OrderOperationsImpl(this.getHttpClient(), this.getConfiguration());
-  }
 }
