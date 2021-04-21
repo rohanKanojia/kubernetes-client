@@ -26,7 +26,10 @@ import io.sundr.transform.annotations.VelocityTransformations;
     @VelocityTransformation(value = "/resource-handler-services.vm", gather = true, outputPath = "META-INF/services/io.fabric8.kubernetes.client.ResourceHandler")
   },
   resources = {
-    @ResourceSelector("model.properties")
+    @ResourceSelector("model-v1.properties"),
+    @ResourceSelector("model-v1alpha2.properties"),
+    @ResourceSelector("model-v1alpha3.properties"),
+    @ResourceSelector("model-v1beta1.properties")
   }
 
 )

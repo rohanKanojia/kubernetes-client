@@ -16,6 +16,8 @@
 package io.fabric8.certmanager.client;
 
 import io.fabric8.certmanager.client.dsl.V1APIGroupDSL;
+import io.fabric8.certmanager.client.dsl.V1alpha2APIGroupDSL;
+import io.fabric8.certmanager.client.dsl.V1alpha3APIGroupDSL;
 import io.fabric8.certmanager.client.dsl.V1beta1APIGroupDSL;
 import io.fabric8.kubernetes.client.*;
 import io.fabric8.kubernetes.client.dsl.FunctionCallable;
@@ -56,6 +58,16 @@ public class DefaultCertManagerClient extends BaseClient implements NamespacedCe
 
   @Override
   public V1APIGroupDSL v1() { return adapt(V1APIGroupClient.class); }
+
+  @Override
+  public V1alpha2APIGroupDSL v1alpha2() {
+    return adapt(V1alpha2APIGroupClient.class);
+  }
+
+  @Override
+  public V1alpha3APIGroupDSL v1alpha3() {
+    return adapt(V1alpha3APIGroupClient.class);
+  }
 
   @Override
   public V1beta1APIGroupDSL v1beta1() {

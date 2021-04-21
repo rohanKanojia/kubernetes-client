@@ -40,7 +40,7 @@
     </osgi.export>
     <osgi.include.resources>
       {maven-resources},
-      /model.properties=target/classes/model.properties
+      /model-v1beta1.properties=target/classes/model.properties
     </osgi.include.resources>
 
     <clone-kube>true</clone-kube>
