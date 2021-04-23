@@ -49,11 +49,10 @@ public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
     if (resource == null) {
       throw new KubernetesClientException("Unrecognized resource");  
     }
-    if (log.isDebugEnabled()) {
-      log.debug("Event received {} {}# resourceVersion {}", action.name(), resource.getKind(), resource.getMetadata().getResourceVersion());
-    }
+    log.info("Event received {} {}# resourceVersion {}", action.name(), resource.getKind(), resource.getMetadata().getResourceVersion());
     switch (action) {
       case ERROR:
+        log.info("Error event");
         throw new KubernetesClientException("ERROR event");
       case ADDED:
         store.add(resource);
@@ -70,7 +69,7 @@ public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
 
   @Override
   public void onClose(WatcherException exception) {
-    log.warn("Watch closing with exception", exception);
+    log.info("Watch closing with exception", exception);
     Optional.ofNullable(exception)
       .filter(WatcherException::isHttpGone)
       .ifPresent(c -> onHttpGone.run());
@@ -79,7 +78,7 @@ public class ReflectorWatcher<T extends HasMetadata> implements Watcher<T> {
 
   @Override
   public void onClose() {
-    log.debug("Watch gracefully closed");
+    log.info("Watch gracefully closed");
     onClose.run();
   }
 

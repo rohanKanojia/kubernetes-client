@@ -102,17 +102,17 @@ public class Reflector<T extends HasMetadata, L extends KubernetesResourceList<T
   }
 
   private void startWatcher() {
-    log.debug("Starting watcher for resource {} v{}", apiTypeClass, lastSyncResourceVersion.get());
+    log.info("Starting watcher for {} {} v{}", apiTypeClass, operationContext.getNamespace(), lastSyncResourceVersion.get());
     if (watch.get() != null) {
-      log.debug("Stopping previous watcher");
+      log.info("Stopping previous watcher");
       watch.get().close();
     }
     if (isWatcherStarted.get()) {
-      log.debug("Watcher already started, delaying execution of new watcher");
+      log.info("Watcher already started, delaying execution of new watcher");
       try {
         Thread.sleep(WATCH_RESTART_DELAY_MILLIS);
       } catch (InterruptedException e) {
-        log.error("Reflector thread was interrupted");
+        log.info("Reflector thread was interrupted");
         Thread.currentThread().interrupt();
         return;
       }
