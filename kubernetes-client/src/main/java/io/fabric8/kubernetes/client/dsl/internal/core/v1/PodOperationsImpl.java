@@ -25,6 +25,8 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
@@ -267,6 +269,15 @@ public class PodOperationsImpl extends HasMetadataOperation<Pod, PodList, PodRes
       return new PortForwarderWebsocket(client).forward(getResourceUrl(), port, localPort);
     } catch (Throwable t) {
       throw KubernetesClientException.launderThrowable(t);
+    }
+  }
+
+  @Override
+  public LocalPortForward portForward(InetAddress inetAddress, int port, int localPort) {
+    try {
+      return new PortForwarderWebsocket(client).forward(getResourceUrl(), port, inetAddress, localPort);
+    } catch (MalformedURLException ex) {
+      throw KubernetesClientException.launderThrowable(ex);
     }
   }
 
