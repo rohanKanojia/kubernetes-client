@@ -4,6 +4,7 @@
 
 #### Bugs
 * Fix #3083: CertificateException due to PEM being decoded in CertUtils
+* Fix #3240: MicroTime serialises incorrectly; add custom serializer/deserializer for MicroTime
 
 #### Improvements
 
