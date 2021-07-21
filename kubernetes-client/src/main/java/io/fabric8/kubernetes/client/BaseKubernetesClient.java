@@ -154,7 +154,7 @@ public abstract class BaseKubernetesClient<C extends Client> extends BaseClient 
    * {@inheritDoc}
    */
   @Override
-  public MixedOperation<ComponentStatus, ComponentStatusList, Resource<ComponentStatus>> componentstatuses() {
+  public NonNamespaceOperation<ComponentStatus, ComponentStatusList, Resource<ComponentStatus>> componentstatuses() {
     return new ComponentStatusOperationsImpl(httpClient, getConfiguration());
   }
 
@@ -322,7 +322,7 @@ public abstract class BaseKubernetesClient<C extends Client> extends BaseClient 
    * {@inheritDoc}
    */
   @Override
-  public MixedOperation<APIService, APIServiceList, Resource<APIService>> apiServices() {
+  public NonNamespaceOperation<APIService, APIServiceList, Resource<APIService>> apiServices() {
     return new APIServiceOperationsImpl(httpClient, getConfiguration());
   }
 
