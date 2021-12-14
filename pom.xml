@@ -184,6 +184,7 @@
     <module>kubernetes-tests</module>
     <module>uberjar</module>
     <module>crd-generator</module>
+      <module>model-v1</module>
   </modules>
 
   <dependencyManagement>
