@@ -192,9 +192,11 @@ func (g *schemaGenerator) jsonDescriptor(t reflect.Type) *JSONDescriptor {
 	case reflect.Interface:
 		// When having something like: Tag interface{}, it should be mapped into "Tag Object".
 		return &JSONDescriptor{Type: "object"}
+	case reflect.Func, reflect.UnsafePointer, reflect.Uintptr:
+		return &JSONDescriptor{Type: "object"}
 	}
 
-	panic("Nothing for " + t.Name())
+	panic("Nothing for " + t.PkgPath() + "." + t.Kind().String())
 }
 
 func (g *schemaGenerator) existingJavaTypeDescriptor(t reflect.Type) *ExistingJavaTypeDescriptor {
@@ -270,11 +272,15 @@ func (g *schemaGenerator) javaType(t reflect.Type) string {
 	}
 
 	// When having something like: Tag interface{}, it should be mapped into "Tag Object".
-	if t.Kind() == reflect.Interface {
+	if t.Kind() == reflect.Interface || t.Kind() == reflect.Func || t.Kind() == reflect.UnsafePointer {
 		return "Object"
 	}
 
-	panic("No type mapping for " + t.PkgPath() + "." + t.Name())
+        if t.Name() == "" {
+            return "Object"
+        }
+
+	panic("No type mapping for " + t.PkgPath() + "." + t.Name() + "  " + t.Kind().String())
 }
 
 func (g *schemaGenerator) javaInterfaces(t reflect.Type) []string {
@@ -391,6 +397,9 @@ func (g *schemaGenerator) generate(schemaId string, crdLists map[reflect.Type]Cr
 	for k, v := range g.types {
 
 		name := g.qualifiedName(k)
+                if name == "_" {
+			continue
+		}
 		value := JSONPropertyDescriptor{
 			JSONDescriptor: &JSONDescriptor{
 				Type: "object",
@@ -513,7 +522,7 @@ func (g *schemaGenerator) getStructProperties(t reflect.Type) map[string]JSONPro
 	fieldList := g.getFields(t)
 	for _, field := range fieldList {
 		jsonName := g.jsonFieldName(field)
-		if jsonName == "-" {
+		if jsonName == "-" { 
 			continue
 		}
 		result[jsonName] = g.propertyDescriptor(field, t)
@@ -775,7 +784,7 @@ func (g *schemaGenerator) resolveJavaClassForProvidedType(t reflect.Type) string
 			return g.adaptJavaClassName(pt.JavaClass)
 		}
 	}
-	panic("Failed to resolve java class for provided type")
+	panic("Failed to resolve java class for provided type: " + t.Kind().String() + t.PkgPath() + t.Name())
 }
 
 func (g *schemaGenerator) isPartOfOwnPackage(t reflect.Type) bool {
@@ -821,7 +830,7 @@ func (g *schemaGenerator) resolveJavaClassUsingMappingSchema(t reflect.Type) str
 			return g.adaptJavaClassName(modifiedTypeName)
 		}
 	}
-	panic("Failed to resolve Java Class using mapping schema definition")
+	panic("Failed to resolve Java Class using mapping schema definition" + t.PkgPath() + "." + t.Name() + " " + t.Kind().String())
 }
 
 func (g *schemaGenerator) resolveFqnJavaTypeUsingMappingSchema(typeName string) string {

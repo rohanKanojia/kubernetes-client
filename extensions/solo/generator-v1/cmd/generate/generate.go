@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/fabric8io/kubernetes-client/generator/pkg/schemagen"
-	gatewayv1 "github.com/solo-io/solo-apis/pkg/api/gateway.solo.io/v1"
+	"strings"
+
+	//gatewayv1 "github.com/solo-io/solo-apis/pkg/api/gateway.solo.io/v1"
 	gloov1 "github.com/solo-io/solo-apis/pkg/api/gloo.solo.io/v1"
 	machinery "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -14,8 +16,8 @@ import (
 func main() {
 
 	crdLists := map[reflect.Type]schemagen.CrdScope{
-		reflect.TypeOf(gloov1.UpstreamList{}):          schemagen.Namespaced,
-		reflect.TypeOf(gatewayv1.VirtualServiceList{}): schemagen.Namespaced,
+		reflect.TypeOf(gloov1.UpstreamList{}): schemagen.Namespaced,
+		//	reflect.TypeOf(gatewayv1.VirtualServiceList{}): schemagen.Namespaced,
 	}
 
 	// constraints and patterns for fields
@@ -41,6 +43,10 @@ func main() {
 		// v1
 		"github.com/solo-io/solo-apis/pkg/api/gloo.solo.io/v1":    {JavaPackage: "io.fabric8.solo.gloo.v1", ApiGroup: "gloo.solo.io", ApiVersion: "v1"},
 		"github.com/solo-io/solo-apis/pkg/api/gateway.solo.io/v1": {JavaPackage: "io.fabric8.solo.gateway.v1", ApiGroup: "gateway.solo.io", ApiVersion: "v1"},
+		"google.golang.org/protobuf/internal/impl":                {JavaPackage: "io.fabric8.solo.api.model.protobuf.internal", ApiGroup: "gateway.solo.io", ApiVersion: "v1"},
+		"google.golang.org/protobuf/types/known/wrapperspb":       {JavaPackage: "io.fabric8.solo.api.model.protobuf.known.wrapperspb", ApiGroup: "gateway.solo.io", ApiVersion: "v1"},
+		"google.golang.org/protobuf/types/known/durationpb":       {JavaPackage: "io.fabric8.solo.api.model.protobuf.known.durationpb", ApiGroup: "gateway.solo.io", ApiVersion: "v1"},
+		"google.golang.org/protobuf/types/known/structpb":         {JavaPackage: "io.fabric8.solo.api.model.protobuf.known.structpb", ApiGroup: "gateway.solo.io", ApiVersion: "v1"},
 	}
 
 	// TODO remove
@@ -50,6 +56,8 @@ func main() {
 	// e.g. github.com/apache/camel-k/pkg/apis/camel/v1/knative/CamelEnvironment is mapped to "io.fabric8.camelk.internal.pkg.apis.camel.v1.knative.CamelEnvironment"
 	mappingSchema := map[string]string{
 		//		"github.com/apache/camel-k/pkg/apis/camel/v1/knative": "io.fabric8.camelk.v1beta1.internal",
+		"github.com/solo-io/solo-apis/pkg/api/gloo.solo.io/v1":                    "io.fabric8.solo.gloo.v1",
+		"github.com/solo-io/solo-apis/pkg/api/gloo.solo.io/external/envoy/api/v2": "io.fabric8.solo.gloo.external.envoy.api.v2",
 	}
 
 	// overwriting some times
@@ -61,5 +69,8 @@ func main() {
 
 	json := schemagen.GenerateSchema("http://solo.io/gloo/v1/GlooSchema#", crdLists, providedPackages, manualTypeMap, packageMapping, mappingSchema, providedTypes, constraints, "io.fabric8")
 
+	json = strings.Replace(json,
+		" \"Desc\": {\n          \"$ref\": \"#/definitions/google_golang_org_protobuf_reflect_protoreflect_MessageDescriptor\",\n          \"interfaceType\": \"Object\"\n        }",
+		"\"Desc\": {\n          \"type\": \"object\",\n          \"existingJavaType\": \"java.util.Map\\u003cString,Object\\u003e\"\n        }", 1)
 	fmt.Println(json)
 }

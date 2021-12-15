@@ -1,0 +1,1565 @@
+{
+  "id": "http://solo.io/gloo/v1/GlooSchema#",
+  "$schema": "http://json-schema.org/draft-05/schema#",
+  "definitions": {
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_cluster_OutlierDetection": {
+      "type": "object",
+      "properties": {
+        "base_ejection_time": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "consecutive_5xx": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "consecutive_gateway_failure": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "consecutive_local_origin_failure": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "enforcing_consecutive_5xx": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "enforcing_consecutive_gateway_failure": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "enforcing_consecutive_local_origin_failure": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "enforcing_local_origin_success_rate": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "enforcing_success_rate": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "max_ejection_percent": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "split_external_local_origin_errors": {
+          "type": "boolean"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "success_rate_minimum_hosts": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "success_rate_request_volume": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "success_rate_stdev_factor": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.external.envoy.api.v2.cluster.OutlierDetection",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_core_HealthCheck": {
+      "type": "object",
+      "properties": {
+        "HealthChecker": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_core_isHealthCheck_HealthChecker",
+          "interfaceType": "io.fabric8.solo.gloo.external.envoy.api.v2.core.IsHealthCheck_HealthChecker"
+        },
+        "always_log_health_check_failures": {
+          "type": "boolean"
+        },
+        "event_log_path": {
+          "type": "string"
+        },
+        "healthy_edge_interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "healthy_threshold": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "initial_jitter": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "interval_jitter": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "interval_jitter_percent": {
+          "type": "integer"
+        },
+        "no_traffic_interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "reuse_connection": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_BoolValue",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.BoolValue"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "timeout": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "unhealthy_edge_interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "unhealthy_interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "unhealthy_threshold": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.external.envoy.api.v2.core.HealthCheck",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_CircuitBreakerConfig": {
+      "type": "object",
+      "properties": {
+        "max_connections": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "max_pending_requests": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "max_requests": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "max_retries": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.CircuitBreakerConfig",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig": {
+      "type": "object",
+      "properties": {
+        "common_http_protocol_options": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions"
+        },
+        "connect_timeout": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "max_requests_per_connection": {
+          "type": "integer"
+        },
+        "per_connection_buffer_limit_bytes": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "tcp_keepalive": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_TcpKeepAlive",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_TcpKeepAlive"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions": {
+      "type": "object",
+      "properties": {
+        "headers_with_underscores_action": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction",
+          "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction"
+        },
+        "idle_timeout": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "max_headers_count": {
+          "type": "integer"
+        },
+        "max_stream_duration": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction": {
+      "type": "string",
+      "javaEnums": [
+        {
+          "name": "ALLOW"
+        },
+        {
+          "name": "REJECT_REQUEST"
+        },
+        {
+          "name": "DROP_HEADER"
+        }
+      ],
+      "enum": [
+        "ALLOW",
+        "REJECT_REQUEST",
+        "DROP_HEADER"
+      ],
+      "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_TcpKeepAlive": {
+      "type": "object",
+      "properties": {
+        "keepalive_interval": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "keepalive_probes": {
+          "type": "integer"
+        },
+        "keepalive_time": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_TcpKeepAlive",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_DiscoveryMetadata": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cString,String\u003e"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.DiscoveryMetadata",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover": {
+      "type": "object",
+      "properties": {
+        "prioritized_localities": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover_PrioritizedLocality",
+            "existingJavaType": "io.fabric8.solo.gloo.v1.Failover_PrioritizedLocality"
+          }
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.Failover",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover_PrioritizedLocality": {
+      "type": "object",
+      "properties": {
+        "locality_endpoints": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LocalityLbEndpoints",
+            "existingJavaType": "io.fabric8.solo.gloo.v1.LocalityLbEndpoints"
+          }
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.Failover_PrioritizedLocality",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "health_check_config": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint_HealthCheckConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.LbEndpoint_HealthCheckConfig"
+        },
+        "load_balancing_weight": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "upstream_ssl_config": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSslConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamSslConfig"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.LbEndpoint",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint_HealthCheckConfig": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "port_value": {
+          "type": "integer"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.LbEndpoint_HealthCheckConfig",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LoadBalancerConfig": {
+      "type": "object",
+      "properties": {
+        "LocalityConfig": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_isLoadBalancerConfig_LocalityConfig",
+          "interfaceType": "io.fabric8.solo.gloo.v1.IsLoadBalancerConfig_LocalityConfig"
+        },
+        "Type": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_isLoadBalancerConfig_Type",
+          "interfaceType": "io.fabric8.solo.gloo.v1.IsLoadBalancerConfig_Type"
+        },
+        "healthy_panic_threshold": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_DoubleValue",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.DoubleValue"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "update_merge_window": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.LoadBalancerConfig",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Locality": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "sub_zone": {
+          "type": "string"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "zone": {
+          "type": "string"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.Locality",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LocalityLbEndpoints": {
+      "type": "object",
+      "properties": {
+        "lb_endpoints": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint",
+            "existingJavaType": "io.fabric8.solo.gloo.v1.LbEndpoint"
+          }
+        },
+        "load_balancing_weight": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "locality": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Locality",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.Locality"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.LocalityLbEndpoints",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters": {
+      "type": "object",
+      "properties": {
+        "cipher_suites": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "ecdh_curves": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "maximum_protocol_version": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters_ProtocolVersion",
+          "javaType": "io.fabric8.solo.gloo.v1.SslParameters_ProtocolVersion"
+        },
+        "minimum_protocol_version": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters_ProtocolVersion",
+          "javaType": "io.fabric8.solo.gloo.v1.SslParameters_ProtocolVersion"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.SslParameters",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters_ProtocolVersion": {
+      "type": "string",
+      "javaEnums": [
+        {
+          "name": "TLS_AUTO"
+        },
+        {
+          "name": "TLSv1_0"
+        },
+        {
+          "name": "TLSv1_1"
+        },
+        {
+          "name": "TLSv1_2"
+        },
+        {
+          "name": "TLSv1_3"
+        }
+      ],
+      "enum": [
+        "TLS_AUTO",
+        "TLSv1_0",
+        "TLSv1_1",
+        "TLSv1_2",
+        "TLSv1_3"
+      ],
+      "javaType": "io.fabric8.solo.gloo.v1.SslParameters_ProtocolVersion"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Upstream": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "default": "gloo.solo.io/v1",
+          "required": true
+        },
+        "kind": {
+          "type": "string",
+          "default": "Upstream",
+          "required": true
+        },
+        "metadata": {
+          "existingJavaType": "io.fabric8.kubernetes.api.model.ObjectMeta"
+        },
+        "spec": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSpec",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamSpec"
+        },
+        "status": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamStatus"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.Upstream",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.HasMetadata",
+        "io.fabric8.kubernetes.api.model.Namespaced"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamList": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "default": "gloo.solo.io/v1",
+          "required": true
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Upstream",
+            "existingJavaType": "io.fabric8.solo.gloo.v1.Upstream"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "default": "UpstreamList",
+          "required": true
+        },
+        "metadata": {
+          "existingJavaType": "io.fabric8.kubernetes.api.model.ListMeta"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamList",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource",
+        "io.fabric8.kubernetes.api.model.KubernetesResourceList\u003cio.fabric8.solo.gloo.v1.Upstream\u003e"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSpec": {
+      "type": "object",
+      "properties": {
+        "UpstreamType": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_isUpstreamSpec_UpstreamType",
+          "interfaceType": "io.fabric8.solo.gloo.v1.IsUpstreamSpec_UpstreamType"
+        },
+        "circuit_breakers": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_CircuitBreakerConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.CircuitBreakerConfig"
+        },
+        "connection_config": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig"
+        },
+        "discovery_metadata": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_DiscoveryMetadata",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.DiscoveryMetadata"
+        },
+        "failover": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.Failover"
+        },
+        "health_checks": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_core_HealthCheck",
+            "existingJavaType": "io.fabric8.solo.gloo.external.envoy.api.v2.core.HealthCheck"
+          }
+        },
+        "http_proxy_hostname": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_StringValue",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.StringValue"
+        },
+        "initial_connection_window_size": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "initial_stream_window_size": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+        },
+        "load_balancer_config": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LoadBalancerConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.LoadBalancerConfig"
+        },
+        "outlier_detection": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_cluster_OutlierDetection",
+          "existingJavaType": "io.fabric8.solo.gloo.external.envoy.api.v2.cluster.OutlierDetection"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "ssl_config": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSslConfig",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamSslConfig"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "use_http2": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_BoolValue",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.BoolValue"
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamSpec",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSslConfig": {
+      "type": "object",
+      "properties": {
+        "SslSecrets": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_isUpstreamSslConfig_SslSecrets",
+          "interfaceType": "io.fabric8.solo.gloo.v1.IsUpstreamSslConfig_SslSecrets"
+        },
+        "alpn_protocols": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "parameters": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters",
+          "existingJavaType": "io.fabric8.solo.gloo.v1.SslParameters"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "sni": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "verify_subject_alt_name": {
+          "type": "array",
+          "javaOmitEmpty": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamSslConfig",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_structpb_Struct",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.structpb.Struct"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "reported_by": {
+          "type": "string"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus_State",
+          "javaType": "io.fabric8.solo.gloo.v1.UpstreamStatus_State"
+        },
+        "subresource_statuses": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cString,io.fabric8.solo.gloo.v1.UpstreamStatus\u003e"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamStatus",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus_State": {
+      "type": "string",
+      "javaEnums": [
+        {
+          "name": "Pending"
+        },
+        {
+          "name": "Accepted"
+        },
+        {
+          "name": "Rejected"
+        },
+        {
+          "name": "Warning"
+        }
+      ],
+      "enum": [
+        "Pending",
+        "Accepted",
+        "Rejected",
+        "Warning"
+      ],
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamStatus_State"
+    },
+    "google_golang_org_protobuf_internal_impl_MessageInfo": {
+      "type": "object",
+      "properties": {
+       "Desc": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cString,Object\u003e"
+        },
+        "Exporter": {
+          "type": "object",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.Exporter"
+        },
+        "GoReflectType": {
+          "$ref": "#/definitions/reflect_Type",
+          "interfaceType": "Object"
+        },
+        "OneofWrappers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_",
+            "existingJavaType": "Object"
+          }
+        },
+        "coderFields": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cInteger,io.fabric8.solo.api.model.protobuf.internal.CoderFieldInfo\u003e"
+        },
+        "denseCoderFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_coderFieldInfo",
+            "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.CoderFieldInfo"
+          }
+        },
+        "denseFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_fieldInfo",
+            "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.FieldInfo"
+          }
+        },
+        "extensionMap": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "extensionOffset": {
+          "type": "object",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.Offset"
+        },
+        "fieldTypes": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cInteger,Object\u003e"
+        },
+        "fields": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cInteger,io.fabric8.solo.api.model.protobuf.internal.FieldInfo\u003e"
+        },
+        "getUnknown": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "initDone": {
+          "type": "integer"
+        },
+        "initMu": {
+          "existingJavaType": "java.util.Map\u003cString, Object\u003e"
+        },
+        "isMessageSet": {
+          "type": "boolean"
+        },
+        "methods": {
+          "$ref": "#/definitions/_",
+          "existingJavaType": "Object"
+        },
+        "needsInitCheck": {
+          "type": "boolean"
+        },
+        "nilMessage": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_atomicNilMessage",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.AtomicNilMessage"
+        },
+        "numRequiredFields": {
+          "type": "integer"
+        },
+        "oneofs": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cString,io.fabric8.solo.api.model.protobuf.internal.OneofInfo\u003e"
+        },
+        "orderedCoderFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_coderFieldInfo",
+            "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.CoderFieldInfo"
+          }
+        },
+        "rangeInfos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/_",
+            "existingJavaType": "Object"
+          }
+        },
+        "setUnknown": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "sizecacheOffset": {
+          "type": "object",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.Offset"
+        },
+        "unknownOffset": {
+          "type": "object",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.Offset"
+        },
+        "unknownPtrKind": {
+          "type": "boolean"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_MessageState": {
+      "type": "object",
+      "properties": {
+        "atomicMessageInfo": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageInfo",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_atomicNilMessage": {
+      "type": "object",
+      "properties": {
+        "p": {
+          "type": "object",
+          "existingJavaType": "Object"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.AtomicNilMessage",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_coderFieldInfo": {
+      "type": "object",
+      "properties": {
+        "ft": {
+          "$ref": "#/definitions/reflect_Type",
+          "interfaceType": "Object"
+        },
+        "funcs": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_pointerCoderFuncs",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.PointerCoderFuncs"
+        },
+        "isPointer": {
+          "type": "boolean"
+        },
+        "isRequired": {
+          "type": "boolean"
+        },
+        "mi": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageInfo",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo"
+        },
+        "num": {
+          "type": "integer"
+        },
+        "offset": {
+          "type": "object",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.Offset"
+        },
+        "tagsize": {
+          "type": "integer"
+        },
+        "validation": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_validationInfo",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.ValidationInfo"
+        },
+        "wiretag": {
+          "type": "integer"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.CoderFieldInfo",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_fieldInfo": {
+      "type": "object",
+      "properties": {
+        "clear": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "fieldDesc": {
+          "$ref": "#/definitions/google_golang_org_protobuf_reflect_protoreflect_FieldDescriptor",
+          "interfaceType": "Object"
+        },
+        "get": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "has": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "mutable": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "newField": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "newMessage": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "set": {
+          "type": "object",
+          "existingJavaType": "Object"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.FieldInfo",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_oneofInfo": {
+      "type": "object",
+      "properties": {
+        "oneofDesc": {
+          "$ref": "#/definitions/google_golang_org_protobuf_reflect_protoreflect_OneofDescriptor",
+          "interfaceType": "Object"
+        },
+        "which": {
+          "type": "object",
+          "existingJavaType": "Object"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.OneofInfo",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_pointerCoderFuncs": {
+      "type": "object",
+      "properties": {
+        "isInit": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "marshal": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "merge": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "mi": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageInfo",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo"
+        },
+        "size": {
+          "type": "object",
+          "existingJavaType": "Object"
+        },
+        "unmarshal": {
+          "type": "object",
+          "existingJavaType": "Object"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.PointerCoderFuncs",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_internal_impl_validationInfo": {
+      "type": "object",
+      "properties": {
+        "keyType": {
+          "type": "integer"
+        },
+        "mi": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageInfo",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo"
+        },
+        "requiredBit": {
+          "type": "integer"
+        },
+        "typ": {
+          "type": "integer"
+        },
+        "valType": {
+          "type": "integer"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.internal.ValidationInfo",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_durationpb_Duration": {
+      "type": "object",
+      "properties": {
+        "nanos": {
+          "type": "integer"
+        },
+        "seconds": {
+          "type": "integer",
+          "existingJavaType": "Long"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_structpb_Struct": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "existingJavaType": "java.util.Map\u003cString,io.fabric8.solo.api.model.protobuf.known.structpb.Value\u003e"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.structpb.Struct",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_structpb_Value": {
+      "type": "object",
+      "properties": {
+        "Kind": {
+          "$ref": "#/definitions/google_golang_org_protobuf_types_known_structpb_isValue_Kind",
+          "interfaceType": "io.fabric8.solo.api.model.protobuf.known.structpb.IsValue_Kind"
+        },
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.structpb.Value",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_BoolValue": {
+      "type": "object",
+      "properties": {
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.BoolValue",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_DoubleValue": {
+      "type": "object",
+      "properties": {
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "value": {
+          "type": "float"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.DoubleValue",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_StringValue": {
+      "type": "object",
+      "properties": {
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.StringValue",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_UInt32Value": {
+      "type": "object",
+      "properties": {
+        "sizeCache": {
+          "type": "integer"
+        },
+        "state": {
+          "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+          "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+        },
+        "unknownFields": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "javaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value",
+      "javaInterfaces": [
+        "io.fabric8.kubernetes.api.model.KubernetesResource"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_cluster_OutlierDetection": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_cluster_OutlierDetection",
+      "existingJavaType": "io.fabric8.solo.gloo.external.envoy.api.v2.cluster.OutlierDetection"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_core_HealthCheck": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_external_envoy_api_v2_core_HealthCheck",
+      "existingJavaType": "io.fabric8.solo.gloo.external.envoy.api.v2.core.HealthCheck"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_CircuitBreakerConfig": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_CircuitBreakerConfig",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.CircuitBreakerConfig"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction",
+      "javaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_HttpProtocolOptions_HeadersWithUnderscoresAction"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_TcpKeepAlive": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_ConnectionConfig_TcpKeepAlive",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.ConnectionConfig_TcpKeepAlive"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_DiscoveryMetadata": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_DiscoveryMetadata",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.DiscoveryMetadata"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.Failover"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover_PrioritizedLocality": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Failover_PrioritizedLocality",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.Failover_PrioritizedLocality"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.LbEndpoint"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint_HealthCheckConfig": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LbEndpoint_HealthCheckConfig",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.LbEndpoint_HealthCheckConfig"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LoadBalancerConfig": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LoadBalancerConfig",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.LoadBalancerConfig"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Locality": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Locality",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.Locality"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LocalityLbEndpoints": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_LocalityLbEndpoints",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.LocalityLbEndpoints"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.SslParameters"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters_ProtocolVersion": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_SslParameters_ProtocolVersion",
+      "javaType": "io.fabric8.solo.gloo.v1.SslParameters_ProtocolVersion"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Upstream": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_Upstream",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.Upstream"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamList": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamList",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamList"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSpec": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSpec",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamSpec"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSslConfig": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamSslConfig",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamSslConfig"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus",
+      "existingJavaType": "io.fabric8.solo.gloo.v1.UpstreamStatus"
+    },
+    "github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus_State": {
+      "$ref": "#/definitions/github_com_solo-io_solo-apis_pkg_api_gloo_solo_io_v1_UpstreamStatus_State",
+      "javaType": "io.fabric8.solo.gloo.v1.UpstreamStatus_State"
+    },
+    "google_golang_org_protobuf_internal_impl_MessageInfo": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageInfo",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageInfo"
+    },
+    "google_golang_org_protobuf_internal_impl_MessageState": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_MessageState",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.MessageState"
+    },
+    "google_golang_org_protobuf_internal_impl_atomicNilMessage": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_atomicNilMessage",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.AtomicNilMessage"
+    },
+    "google_golang_org_protobuf_internal_impl_coderFieldInfo": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_coderFieldInfo",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.CoderFieldInfo"
+    },
+    "google_golang_org_protobuf_internal_impl_fieldInfo": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_fieldInfo",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.FieldInfo"
+    },
+    "google_golang_org_protobuf_internal_impl_oneofInfo": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_oneofInfo",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.OneofInfo"
+    },
+    "google_golang_org_protobuf_internal_impl_pointerCoderFuncs": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_pointerCoderFuncs",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.PointerCoderFuncs"
+    },
+    "google_golang_org_protobuf_internal_impl_validationInfo": {
+      "$ref": "#/definitions/google_golang_org_protobuf_internal_impl_validationInfo",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.internal.ValidationInfo"
+    },
+    "google_golang_org_protobuf_types_known_durationpb_Duration": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_durationpb_Duration",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.durationpb.Duration"
+    },
+    "google_golang_org_protobuf_types_known_structpb_Struct": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_structpb_Struct",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.structpb.Struct"
+    },
+    "google_golang_org_protobuf_types_known_structpb_Value": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_structpb_Value",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.structpb.Value"
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_BoolValue": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_BoolValue",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.BoolValue"
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_DoubleValue": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_DoubleValue",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.DoubleValue"
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_StringValue": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_StringValue",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.StringValue"
+    },
+    "google_golang_org_protobuf_types_known_wrapperspb_UInt32Value": {
+      "$ref": "#/definitions/google_golang_org_protobuf_types_known_wrapperspb_UInt32Value",
+      "existingJavaType": "io.fabric8.solo.api.model.protobuf.known.wrapperspb.UInt32Value"
+    }
+  },
+  "additionalProperties": false
+}
