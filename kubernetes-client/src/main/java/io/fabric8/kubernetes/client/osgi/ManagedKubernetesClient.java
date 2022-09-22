@@ -22,16 +22,6 @@ import io.fabric8.kubernetes.client.NamespacedKubernetesClient;
 import io.fabric8.kubernetes.client.OAuthTokenProvider;
 import io.fabric8.kubernetes.client.ResourceHandler;
 import io.fabric8.kubernetes.client.extension.ExtensionAdapter;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
-import org.apache.felix.scr.annotations.ReferencePolicyOption;
-import org.apache.felix.scr.annotations.References;
-import org.apache.felix.scr.annotations.Service;
 
 import java.util.Map;
 
@@ -62,12 +52,23 @@ import static io.fabric8.kubernetes.client.Config.KUBERNETES_WATCH_RECONNECT_LIM
 import static io.fabric8.kubernetes.client.Config.KUBERNETES_WEBSOCKET_PING_INTERVAL_SYSTEM_PROPERTY;
 import static io.fabric8.kubernetes.client.Config.KUBERNETES_WEBSOCKET_TIMEOUT_SYSTEM_PROPERTY;
 
-@Component(configurationPid = "io.fabric8.kubernetes.client", policy = ConfigurationPolicy.REQUIRE)
-@Service({ KubernetesClient.class, NamespacedKubernetesClient.class })
-@References({
-    @Reference(referenceInterface = io.fabric8.kubernetes.client.ResourceHandler.class, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC, bind = "bindResourceHandler", unbind = "unbindResourceHandler"),
-    @Reference(referenceInterface = ExtensionAdapter.class, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC, bind = "bindExtensionAdapter", unbind = "unbindExtensionAdapter"),
-    @Reference(referenceInterface = OAuthTokenProvider.class, cardinality = ReferenceCardinality.OPTIONAL_UNARY, policyOption = ReferencePolicyOption.GREEDY, bind = "bindOAuthTokenProvider", unbind = "unbindOAuthTokenProvider")
+@org.osgi.service.component.annotations.Component(
+  configurationPid = "io.fabric8.kubernetes.client",
+  name = "io.fabric8.kubernetes.client",
+  service = { KubernetesClient.class, NamespacedKubernetesClient.class },
+  reference = {
+    @org.osgi.service.component.annotations.Reference(name = "resourceHandler", service = io.fabric8.kubernetes.client.ResourceHandler.class, cardinality = org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE, policy = org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC, bind = "bindResourceHandler", unbind = "unbindResourceHandler"),
+    @org.osgi.service.component.annotations.Reference(name = "extensionAdapter", service = ExtensionAdapter.class, cardinality = org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE, policy = org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC,  bind = "bindExtensionAdapter", unbind = "unbindExtensionAdapter"),
+    @org.osgi.service.component.annotations.Reference(name = "oAuthTokenProvider", service = OAuthTokenProvider.class, cardinality = org.osgi.service.component.annotations.ReferenceCardinality.OPTIONAL, policyOption = org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY, bind = "bindOAuthTokenProvider", unbind = "unbindOAuthTokenProvider"),
+  },
+  configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.REQUIRE
+)
+@org.apache.felix.scr.annotations.Component(configurationPid = "io.fabric8.kubernetes.client", policy = org.apache.felix.scr.annotations.ConfigurationPolicy.REQUIRE)
+@org.apache.felix.scr.annotations.Service({ KubernetesClient.class, NamespacedKubernetesClient.class })
+@org.apache.felix.scr.annotations.References({
+    @org.apache.felix.scr.annotations.Reference(referenceInterface = io.fabric8.kubernetes.client.ResourceHandler.class, cardinality = org.apache.felix.scr.annotations.ReferenceCardinality.OPTIONAL_MULTIPLE, policy = org.apache.felix.scr.annotations.ReferencePolicy.DYNAMIC, bind = "bindResourceHandler", unbind = "unbindResourceHandler"),
+    @org.apache.felix.scr.annotations.Reference(referenceInterface = ExtensionAdapter.class, cardinality = org.apache.felix.scr.annotations.ReferenceCardinality.OPTIONAL_MULTIPLE, policy = org.apache.felix.scr.annotations.ReferencePolicy.DYNAMIC, bind = "bindExtensionAdapter", unbind = "unbindExtensionAdapter"),
+    @org.apache.felix.scr.annotations.Reference(referenceInterface = OAuthTokenProvider.class, cardinality = org.apache.felix.scr.annotations.ReferenceCardinality.OPTIONAL_UNARY, policyOption = org.apache.felix.scr.annotations.ReferencePolicyOption.GREEDY, bind = "bindOAuthTokenProvider", unbind = "unbindOAuthTokenProvider")
 })
 public class ManagedKubernetesClient extends NamespacedKubernetesClientAdapter<DefaultKubernetesClient> {
 
@@ -77,7 +78,8 @@ public class ManagedKubernetesClient extends NamespacedKubernetesClientAdapter<D
 
   private OAuthTokenProvider provider;
 
-  @Activate
+  @org.osgi.service.component.annotations.Activate
+  @org.apache.felix.scr.annotations.Activate
   public void activate(Map<String, Object> properties) {
     final ConfigBuilder builder = new ConfigBuilder();
 
@@ -170,7 +172,8 @@ public class ManagedKubernetesClient extends NamespacedKubernetesClientAdapter<D
     this.init(new DefaultKubernetesClient(builder.build()));
   }
 
-  @Deactivate
+  @org.osgi.service.component.annotations.Deactivate
+  @org.apache.felix.scr.annotations.Deactivate
   public void deactivate() {
     this.close();
   }

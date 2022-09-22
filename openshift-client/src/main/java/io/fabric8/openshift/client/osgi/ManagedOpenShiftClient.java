@@ -25,7 +25,6 @@ import io.fabric8.kubernetes.client.VersionInfo;
 import io.fabric8.kubernetes.client.dsl.FunctionCallable;
 import io.fabric8.kubernetes.client.dsl.Gettable;
 import io.fabric8.kubernetes.client.dsl.InOutCreateable;
-import io.fabric8.kubernetes.client.dsl.LogWatch;
 import io.fabric8.kubernetes.client.dsl.MixedOperation;
 import io.fabric8.kubernetes.client.dsl.Nameable;
 import io.fabric8.kubernetes.client.dsl.Namespaceable;
@@ -148,11 +147,6 @@ import io.fabric8.openshift.client.dsl.OpenShiftWhereaboutsAPIGroupDSL;
 import io.fabric8.openshift.client.dsl.ProjectOperation;
 import io.fabric8.openshift.client.dsl.ProjectRequestOperation;
 import io.fabric8.openshift.client.dsl.TemplateResource;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Service;
 
 import java.net.URL;
 import java.util.Map;
@@ -183,8 +177,14 @@ import static io.fabric8.openshift.client.OpenShiftConfig.DEFAULT_BUILD_TIMEOUT;
 import static io.fabric8.openshift.client.OpenShiftConfig.OPENSHIFT_BUILD_TIMEOUT_SYSTEM_PROPERTY;
 import static io.fabric8.openshift.client.OpenShiftConfig.OPENSHIFT_URL_SYSTEM_PROPERTY;
 
-@Component(configurationPid = "io.fabric8.openshift.client", policy = ConfigurationPolicy.OPTIONAL)
-@Service({ OpenShiftClient.class, NamespacedOpenShiftClient.class })
+@org.osgi.service.component.annotations.Component(
+  configurationPid = "io.fabric8.openshift.client",
+  name = "io.fabric8.openshift.client",
+  service = { OpenShiftClient.class, NamespacedOpenShiftClient.class },
+  configurationPolicy = org.osgi.service.component.annotations.ConfigurationPolicy.OPTIONAL
+)
+@org.apache.felix.scr.annotations.Component(configurationPid = "io.fabric8.openshift.client", policy = org.apache.felix.scr.annotations.ConfigurationPolicy.OPTIONAL)
+@org.apache.felix.scr.annotations.Service({ OpenShiftClient.class, NamespacedOpenShiftClient.class })
 public class ManagedOpenShiftClient extends NamespacedKubernetesClientAdapter<NamespacedOpenShiftClient>
     implements NamespacedOpenShiftClient {
 
@@ -192,7 +192,8 @@ public class ManagedOpenShiftClient extends NamespacedKubernetesClientAdapter<Na
     super(NamespacedOpenShiftClient.class);
   }
 
-  @Activate
+  @org.osgi.service.component.annotations.Activate
+  @org.apache.felix.scr.annotations.Activate
   public void activate(Map<String, Object> properties) {
     final OpenShiftConfigBuilder builder = new OpenShiftConfigBuilder();
 
@@ -282,7 +283,8 @@ public class ManagedOpenShiftClient extends NamespacedKubernetesClientAdapter<Na
     this.init(delegate);
   }
 
-  @Deactivate
+  @org.osgi.service.component.annotations.Deactivate
+  @org.apache.felix.scr.annotations.Deactivate
   public void deactivate() {
     getClient().close();
   }

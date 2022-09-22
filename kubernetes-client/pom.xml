@@ -109,6 +109,13 @@
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+      <version>${osgi.annotations.version}</version>
+      <scope>compile</scope>
+      <optional>true</optional>
+    </dependency>
 
     <!-- Testing Dependencies -->
     <dependency>
