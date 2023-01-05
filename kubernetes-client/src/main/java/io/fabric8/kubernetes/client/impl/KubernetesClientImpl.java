@@ -78,6 +78,7 @@ import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.NamespacedKubernetesClient;
 import io.fabric8.kubernetes.client.RequestConfig;
 import io.fabric8.kubernetes.client.V1AdmissionRegistrationAPIGroupDSL;
+import io.fabric8.kubernetes.client.V1Alpha1AdmissionRegistrationAPIGroupDSL;
 import io.fabric8.kubernetes.client.V1ApiextensionAPIGroupDSL;
 import io.fabric8.kubernetes.client.V1AuthorizationAPIGroupDSL;
 import io.fabric8.kubernetes.client.V1AutoscalingAPIGroupDSL;
@@ -133,6 +134,7 @@ import io.fabric8.kubernetes.client.dsl.V1beta1FlowControlAPIGroupDSL;
 import io.fabric8.kubernetes.client.dsl.V1beta1PolicyAPIGroupDSL;
 import io.fabric8.kubernetes.client.dsl.V1beta1SchedulingAPIGroupDSL;
 import io.fabric8.kubernetes.client.dsl.V1beta2FlowControlAPIGroupDSL;
+import io.fabric8.kubernetes.client.dsl.V1beta3FlowControlAPIGroupDSL;
 import io.fabric8.kubernetes.client.dsl.base.ResourceDefinitionContext;
 import io.fabric8.kubernetes.client.dsl.internal.HasMetadataOperation;
 import io.fabric8.kubernetes.client.dsl.internal.NamespaceVisitFromServerGetWatchDeleteRecreateWaitApplicableListImpl;
@@ -193,6 +195,8 @@ public class KubernetesClientImpl extends BaseClient implements NamespacedKubern
     this.getAdapters().registerClient(V1AdmissionRegistrationAPIGroupDSL.class, new V1AdmissionRegistrationAPIGroupClient());
     this.getAdapters().registerClient(V1beta1AdmissionRegistrationAPIGroupDSL.class,
         new V1beta1AdmissionRegistrationAPIGroupClient());
+    this.getAdapters().registerClient(V1Alpha1AdmissionRegistrationAPIGroupDSL.class,
+        new V1Alpha1AdmissionRegistrationAPIGroupClient());
     this.getAdapters().registerClient(AutoscalingAPIGroupDSL.class, new AutoscalingAPIGroupClient());
     this.getAdapters().registerClient(ApiextensionsAPIGroupDSL.class, new ApiextensionsAPIGroupClient());
     this.getAdapters().registerClient(AuthorizationAPIGroupDSL.class, new AuthorizationAPIGroupClient());
@@ -210,6 +214,7 @@ public class KubernetesClientImpl extends BaseClient implements NamespacedKubern
     this.getAdapters().registerClient(FlowControlAPIGroupDSL.class, new FlowControlAPIGroupClient());
     this.getAdapters().registerClient(V1beta1FlowControlAPIGroupDSL.class, new V1beta1FlowControlAPIGroupClient());
     this.getAdapters().registerClient(V1beta2FlowControlAPIGroupDSL.class, new V1beta2FlowControlAPIGroupClient());
+    this.getAdapters().registerClient(V1beta3FlowControlAPIGroupDSL.class, new V1beta3FlowControlAPIGroupClient());
     this.getAdapters().registerClient(MetricAPIGroupDSL.class, new MetricAPIGroupClient());
     this.getAdapters().registerClient(NetworkAPIGroupDSL.class, new NetworkAPIGroupClient());
     this.getAdapters().registerClient(PolicyAPIGroupDSL.class, new PolicyAPIGroupClient());
