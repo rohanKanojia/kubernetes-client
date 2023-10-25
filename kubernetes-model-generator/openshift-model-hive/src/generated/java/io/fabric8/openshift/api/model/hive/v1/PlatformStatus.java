@@ -22,7 +22,6 @@ import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.fabric8.kubernetes.api.model.ResourceRequirements;
-import io.fabric8.openshift.api.model.hive.aws.v1.AwsPlatformStatus;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import lombok.EqualsAndHashCode;
@@ -61,7 +60,7 @@ public class PlatformStatus implements Editable<PlatformStatusBuilder> , Kuberne
 {
 
     @JsonProperty("aws")
-    private AwsPlatformStatus aws;
+    private io.fabric8.openshift.api.model.hive.aws.v1.PlatformStatus aws;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -72,18 +71,18 @@ public class PlatformStatus implements Editable<PlatformStatusBuilder> , Kuberne
     public PlatformStatus() {
     }
 
-    public PlatformStatus(AwsPlatformStatus aws) {
+    public PlatformStatus(io.fabric8.openshift.api.model.hive.aws.v1.PlatformStatus aws) {
         super();
         this.aws = aws;
     }
 
     @JsonProperty("aws")
-    public AwsPlatformStatus getAws() {
+    public io.fabric8.openshift.api.model.hive.aws.v1.PlatformStatus getAws() {
         return aws;
     }
 
     @JsonProperty("aws")
-    public void setAws(AwsPlatformStatus aws) {
+    public void setAws(io.fabric8.openshift.api.model.hive.aws.v1.PlatformStatus aws) {
         this.aws = aws;
     }
 

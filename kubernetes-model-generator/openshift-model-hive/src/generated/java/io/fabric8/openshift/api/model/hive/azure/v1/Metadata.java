@@ -1,5 +1,5 @@
 
-package io.fabric8.openshift.api.model.hive.aws.v1;
+package io.fabric8.openshift.api.model.hive.azure.v1;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ import lombok.experimental.Accessors;
     "apiVersion",
     "kind",
     "metadata",
-    "privateLink"
+    "resourceGroupName"
 })
 @ToString
 @EqualsAndHashCode
@@ -56,11 +56,11 @@ import lombok.experimental.Accessors;
     @BuildableReference(PersistentVolumeClaim.class)
 })
 @Generated("jsonschema2pojo")
-public class AwsPlatformStatus implements Editable<AwsPlatformStatusBuilder> , KubernetesResource
+public class Metadata implements Editable<MetadataBuilder> , KubernetesResource
 {
 
-    @JsonProperty("privateLink")
-    private PrivateLinkAccessStatus privateLink;
+    @JsonProperty("resourceGroupName")
+    private String resourceGroupName;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -68,31 +68,31 @@ public class AwsPlatformStatus implements Editable<AwsPlatformStatusBuilder> , K
      * No args constructor for use in serialization
      * 
      */
-    public AwsPlatformStatus() {
+    public Metadata() {
     }
 
-    public AwsPlatformStatus(PrivateLinkAccessStatus privateLink) {
+    public Metadata(String resourceGroupName) {
         super();
-        this.privateLink = privateLink;
+        this.resourceGroupName = resourceGroupName;
     }
 
-    @JsonProperty("privateLink")
-    public PrivateLinkAccessStatus getPrivateLink() {
-        return privateLink;
+    @JsonProperty("resourceGroupName")
+    public String getResourceGroupName() {
+        return resourceGroupName;
     }
 
-    @JsonProperty("privateLink")
-    public void setPrivateLink(PrivateLinkAccessStatus privateLink) {
-        this.privateLink = privateLink;
-    }
-
-    @JsonIgnore
-    public AwsPlatformStatusBuilder edit() {
-        return new AwsPlatformStatusBuilder(this);
+    @JsonProperty("resourceGroupName")
+    public void setResourceGroupName(String resourceGroupName) {
+        this.resourceGroupName = resourceGroupName;
     }
 
     @JsonIgnore
-    public AwsPlatformStatusBuilder toBuilder() {
+    public MetadataBuilder edit() {
+        return new MetadataBuilder(this);
+    }
+
+    @JsonIgnore
+    public MetadataBuilder toBuilder() {
         return edit();
     }
 

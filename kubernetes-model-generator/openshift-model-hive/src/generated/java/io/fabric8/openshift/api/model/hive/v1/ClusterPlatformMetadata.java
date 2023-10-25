@@ -22,8 +22,6 @@ import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.PodTemplateSpec;
 import io.fabric8.kubernetes.api.model.ResourceRequirements;
-import io.fabric8.openshift.api.model.hive.aws.v1.AwsMetadata;
-import io.fabric8.openshift.api.model.hive.azure.v1.AzureMetadata;
 import io.sundr.builder.annotations.Buildable;
 import io.sundr.builder.annotations.BuildableReference;
 import lombok.EqualsAndHashCode;
@@ -63,9 +61,9 @@ public class ClusterPlatformMetadata implements Editable<ClusterPlatformMetadata
 {
 
     @JsonProperty("aws")
-    private AwsMetadata aws;
+    private io.fabric8.openshift.api.model.hive.aws.v1.Metadata aws;
     @JsonProperty("azure")
-    private AzureMetadata azure;
+    private io.fabric8.openshift.api.model.hive.azure.v1.Metadata azure;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -76,29 +74,29 @@ public class ClusterPlatformMetadata implements Editable<ClusterPlatformMetadata
     public ClusterPlatformMetadata() {
     }
 
-    public ClusterPlatformMetadata(AwsMetadata aws, AzureMetadata azure) {
+    public ClusterPlatformMetadata(io.fabric8.openshift.api.model.hive.aws.v1.Metadata aws, io.fabric8.openshift.api.model.hive.azure.v1.Metadata azure) {
         super();
         this.aws = aws;
         this.azure = azure;
     }
 
     @JsonProperty("aws")
-    public AwsMetadata getAws() {
+    public io.fabric8.openshift.api.model.hive.aws.v1.Metadata getAws() {
         return aws;
     }
 
     @JsonProperty("aws")
-    public void setAws(AwsMetadata aws) {
+    public void setAws(io.fabric8.openshift.api.model.hive.aws.v1.Metadata aws) {
         this.aws = aws;
     }
 
     @JsonProperty("azure")
-    public AzureMetadata getAzure() {
+    public io.fabric8.openshift.api.model.hive.azure.v1.Metadata getAzure() {
         return azure;
     }
 
     @JsonProperty("azure")
-    public void setAzure(AzureMetadata azure) {
+    public void setAzure(io.fabric8.openshift.api.model.hive.azure.v1.Metadata azure) {
         this.azure = azure;
     }
 

@@ -1,5 +1,5 @@
 
-package io.fabric8.openshift.api.model.hive.azure.v1;
+package io.fabric8.openshift.api.model.hive.aws.v1;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,6 +16,7 @@ import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.KubernetesResource;
 import io.fabric8.kubernetes.api.model.LabelSelector;
+import io.fabric8.kubernetes.api.model.LocalObjectReference;
 import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
@@ -34,10 +35,7 @@ import lombok.experimental.Accessors;
     "apiVersion",
     "kind",
     "metadata",
-    "baseDomainResourceGroupName",
-    "cloudName",
-    "credentialsSecretRef",
-    "region"
+    "hostedZoneRole"
 })
 @ToString
 @EqualsAndHashCode
@@ -54,21 +52,15 @@ import lombok.experimental.Accessors;
     @BuildableReference(ResourceRequirements.class),
     @BuildableReference(IntOrString.class),
     @BuildableReference(ObjectReference.class),
-    @BuildableReference(io.fabric8.kubernetes.api.model.LocalObjectReference.class),
+    @BuildableReference(LocalObjectReference.class),
     @BuildableReference(PersistentVolumeClaim.class)
 })
 @Generated("jsonschema2pojo")
-public class AzurePlatform implements Editable<AzurePlatformBuilder> , KubernetesResource
+public class Metadata implements Editable<MetadataBuilder> , KubernetesResource
 {
 
-    @JsonProperty("baseDomainResourceGroupName")
-    private String baseDomainResourceGroupName;
-    @JsonProperty("cloudName")
-    private String cloudName;
-    @JsonProperty("credentialsSecretRef")
-    private io.fabric8.kubernetes.api.model.LocalObjectReference credentialsSecretRef;
-    @JsonProperty("region")
-    private String region;
+    @JsonProperty("hostedZoneRole")
+    private String hostedZoneRole;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -76,64 +68,31 @@ public class AzurePlatform implements Editable<AzurePlatformBuilder> , Kubernete
      * No args constructor for use in serialization
      * 
      */
-    public AzurePlatform() {
+    public Metadata() {
     }
 
-    public AzurePlatform(String baseDomainResourceGroupName, String cloudName, io.fabric8.kubernetes.api.model.LocalObjectReference credentialsSecretRef, String region) {
+    public Metadata(String hostedZoneRole) {
         super();
-        this.baseDomainResourceGroupName = baseDomainResourceGroupName;
-        this.cloudName = cloudName;
-        this.credentialsSecretRef = credentialsSecretRef;
-        this.region = region;
+        this.hostedZoneRole = hostedZoneRole;
     }
 
-    @JsonProperty("baseDomainResourceGroupName")
-    public String getBaseDomainResourceGroupName() {
-        return baseDomainResourceGroupName;
+    @JsonProperty("hostedZoneRole")
+    public String getHostedZoneRole() {
+        return hostedZoneRole;
     }
 
-    @JsonProperty("baseDomainResourceGroupName")
-    public void setBaseDomainResourceGroupName(String baseDomainResourceGroupName) {
-        this.baseDomainResourceGroupName = baseDomainResourceGroupName;
-    }
-
-    @JsonProperty("cloudName")
-    public String getCloudName() {
-        return cloudName;
-    }
-
-    @JsonProperty("cloudName")
-    public void setCloudName(String cloudName) {
-        this.cloudName = cloudName;
-    }
-
-    @JsonProperty("credentialsSecretRef")
-    public io.fabric8.kubernetes.api.model.LocalObjectReference getCredentialsSecretRef() {
-        return credentialsSecretRef;
-    }
-
-    @JsonProperty("credentialsSecretRef")
-    public void setCredentialsSecretRef(io.fabric8.kubernetes.api.model.LocalObjectReference credentialsSecretRef) {
-        this.credentialsSecretRef = credentialsSecretRef;
-    }
-
-    @JsonProperty("region")
-    public String getRegion() {
-        return region;
-    }
-
-    @JsonProperty("region")
-    public void setRegion(String region) {
-        this.region = region;
+    @JsonProperty("hostedZoneRole")
+    public void setHostedZoneRole(String hostedZoneRole) {
+        this.hostedZoneRole = hostedZoneRole;
     }
 
     @JsonIgnore
-    public AzurePlatformBuilder edit() {
-        return new AzurePlatformBuilder(this);
+    public MetadataBuilder edit() {
+        return new MetadataBuilder(this);
     }
 
     @JsonIgnore
-    public AzurePlatformBuilder toBuilder() {
+    public MetadataBuilder toBuilder() {
         return edit();
     }
 

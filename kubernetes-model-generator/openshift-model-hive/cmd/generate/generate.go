@@ -133,12 +133,6 @@ func main() {
   }
   result := string(b)
   result = strings.Replace(result, "\"additionalProperty\":", "\"additionalProperties\":", -1)
-  // Sundrio seems to be having problems with generating builders when there are fields with same class
-  // names but different packages
-  result = strings.Replace(result, "io.fabric8.openshift.api.model.hive.aws.v1.Metadata", "io.fabric8.openshift.api.model.hive.aws.v1.AwsMetadata", -1)
-  result = strings.Replace(result, "io.fabric8.openshift.api.model.hive.azure.v1.Metadata", "io.fabric8.openshift.api.model.hive.azure.v1.AzureMetadata", -1)
-  result = strings.Replace(result, "io.fabric8.openshift.api.model.hive.aws.v1.Platform", "io.fabric8.openshift.api.model.hive.aws.v1.AwsPlatform", -1)
-  result = strings.Replace(result, "io.fabric8.openshift.api.model.hive.azure.v1.Platform", "io.fabric8.openshift.api.model.hive.azure.v1.AzurePlatform", -1)
 
   var out bytes.Buffer
   err = json.Indent(&out, []byte(result), "", "  ")

@@ -59,7 +59,7 @@ import lombok.experimental.Accessors;
     @BuildableReference(PersistentVolumeClaim.class)
 })
 @Generated("jsonschema2pojo")
-public class AwsPlatform implements Editable<AwsPlatformBuilder> , KubernetesResource
+public class Platform implements Editable<PlatformBuilder> , KubernetesResource
 {
 
     @JsonProperty("credentialsAssumeRole")
@@ -80,10 +80,10 @@ public class AwsPlatform implements Editable<AwsPlatformBuilder> , KubernetesRes
      * No args constructor for use in serialization
      * 
      */
-    public AwsPlatform() {
+    public Platform() {
     }
 
-    public AwsPlatform(AssumeRole credentialsAssumeRole, io.fabric8.kubernetes.api.model.LocalObjectReference credentialsSecretRef, PrivateLinkAccess privateLink, java.lang.String region, Map<String, String> userTags) {
+    public Platform(AssumeRole credentialsAssumeRole, io.fabric8.kubernetes.api.model.LocalObjectReference credentialsSecretRef, PrivateLinkAccess privateLink, java.lang.String region, Map<String, String> userTags) {
         super();
         this.credentialsAssumeRole = credentialsAssumeRole;
         this.credentialsSecretRef = credentialsSecretRef;
@@ -143,12 +143,12 @@ public class AwsPlatform implements Editable<AwsPlatformBuilder> , KubernetesRes
     }
 
     @JsonIgnore
-    public AwsPlatformBuilder edit() {
-        return new AwsPlatformBuilder(this);
+    public PlatformBuilder edit() {
+        return new PlatformBuilder(this);
     }
 
     @JsonIgnore
-    public AwsPlatformBuilder toBuilder() {
+    public PlatformBuilder toBuilder() {
         return edit();
     }
 

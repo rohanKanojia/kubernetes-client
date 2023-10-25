@@ -35,7 +35,7 @@ import lombok.experimental.Accessors;
     "apiVersion",
     "kind",
     "metadata",
-    "hostedZoneRole"
+    "privateLink"
 })
 @ToString
 @EqualsAndHashCode
@@ -56,11 +56,11 @@ import lombok.experimental.Accessors;
     @BuildableReference(PersistentVolumeClaim.class)
 })
 @Generated("jsonschema2pojo")
-public class AwsMetadata implements Editable<AwsMetadataBuilder> , KubernetesResource
+public class PlatformStatus implements Editable<PlatformStatusBuilder> , KubernetesResource
 {
 
-    @JsonProperty("hostedZoneRole")
-    private String hostedZoneRole;
+    @JsonProperty("privateLink")
+    private PrivateLinkAccessStatus privateLink;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
@@ -68,31 +68,31 @@ public class AwsMetadata implements Editable<AwsMetadataBuilder> , KubernetesRes
      * No args constructor for use in serialization
      * 
      */
-    public AwsMetadata() {
+    public PlatformStatus() {
     }
 
-    public AwsMetadata(String hostedZoneRole) {
+    public PlatformStatus(PrivateLinkAccessStatus privateLink) {
         super();
-        this.hostedZoneRole = hostedZoneRole;
+        this.privateLink = privateLink;
     }
 
-    @JsonProperty("hostedZoneRole")
-    public String getHostedZoneRole() {
-        return hostedZoneRole;
+    @JsonProperty("privateLink")
+    public PrivateLinkAccessStatus getPrivateLink() {
+        return privateLink;
     }
 
-    @JsonProperty("hostedZoneRole")
-    public void setHostedZoneRole(String hostedZoneRole) {
-        this.hostedZoneRole = hostedZoneRole;
-    }
-
-    @JsonIgnore
-    public AwsMetadataBuilder edit() {
-        return new AwsMetadataBuilder(this);
+    @JsonProperty("privateLink")
+    public void setPrivateLink(PrivateLinkAccessStatus privateLink) {
+        this.privateLink = privateLink;
     }
 
     @JsonIgnore
-    public AwsMetadataBuilder toBuilder() {
+    public PlatformStatusBuilder edit() {
+        return new PlatformStatusBuilder(this);
+    }
+
+    @JsonIgnore
+    public PlatformStatusBuilder toBuilder() {
         return edit();
     }
 
