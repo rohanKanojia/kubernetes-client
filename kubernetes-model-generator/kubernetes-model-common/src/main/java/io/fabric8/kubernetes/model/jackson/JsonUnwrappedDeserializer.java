@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.node.TreeTraversingParser;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -56,10 +57,10 @@ public class JsonUnwrappedDeserializer<T> extends JsonDeserializer<T> implements
     }
   }
 
-  private JsonDeserializer<T> beanDeserializer;
+  private List<JsonDeserializer<T>> beanDeserializerList;
+  private NameTransformer nameTransformer;
   private Set<String> ownPropertyNames;
   private String unwrappedPropertyName;
-  private NameTransformer nameTransformer;
 
   /*
    * Needed by Jackson
@@ -72,7 +73,8 @@ public class JsonUnwrappedDeserializer<T> extends JsonDeserializer<T> implements
 
     BeanDescription description = deserializationContext.getConfig().introspect(type);
 
-    final JsonUnwrapped[] tempUnwrappedAnnotation = { null };
+    List<JsonUnwrapped> tempUnwrappedAnnotations = new ArrayList<>();
+    beanDeserializerList = new ArrayList<>();
 
     List<BeanPropertyDefinition> unwrappedProperties = description.findProperties().stream()
         .filter(prop -> Arrays.asList(prop.getConstructorParameter(), prop.getMutator(), prop.getField()).stream()
@@ -80,7 +82,7 @@ public class JsonUnwrappedDeserializer<T> extends JsonDeserializer<T> implements
             .anyMatch(member -> {
               JsonUnwrapped unwrappedAnnotation = member.getAnnotation(JsonUnwrapped.class);
               if (unwrappedAnnotation != null) {
-                tempUnwrappedAnnotation[0] = unwrappedAnnotation;
+                tempUnwrappedAnnotations.add(unwrappedAnnotation);
                 member.getAllAnnotations().add(cancelUnwrappedAnnotation);
               }
               return unwrappedAnnotation != null;
@@ -89,25 +91,20 @@ public class JsonUnwrappedDeserializer<T> extends JsonDeserializer<T> implements
 
     if (unwrappedProperties.isEmpty()) {
       throw new UnsupportedOperationException("@JsonUnwrapped properties not found in " + type.getTypeName());
-    } else if (unwrappedProperties.size() > 1) {
-      throw new UnsupportedOperationException("Multiple @JsonUnwrapped properties found in " + type.getTypeName());
     }
 
-    BeanPropertyDefinition unwrappedProperty = unwrappedProperties.get(0);
-
-    nameTransformer = NameTransformer.simpleTransformer(tempUnwrappedAnnotation[0].prefix(),
-        tempUnwrappedAnnotation[0].suffix());
-
-    unwrappedPropertyName = unwrappedProperty.getName();
-
+    nameTransformer = NameTransformer.simpleTransformer("","");
     ownPropertyNames = description.findProperties().stream().map(BeanPropertyDefinition::getName).collect(Collectors.toSet());
-    ownPropertyNames.remove(unwrappedPropertyName);
     ownPropertyNames.removeAll(description.getIgnoredPropertyNames());
+    for (BeanPropertyDefinition unwrappedProperty : unwrappedProperties) {
+      unwrappedPropertyName = unwrappedProperty.getName();
 
-    JsonDeserializer<Object> rawBeanDeserializer = deserializationContext.getFactory()
+      ownPropertyNames.remove(unwrappedProperty.getName());
+      JsonDeserializer<Object> rawBeanDeserializer = deserializationContext.getFactory()
         .createBeanDeserializer(deserializationContext, type, description);
-    ((ResolvableDeserializer) rawBeanDeserializer).resolve(deserializationContext);
-    beanDeserializer = (JsonDeserializer<T>) rawBeanDeserializer;
+      ((ResolvableDeserializer) rawBeanDeserializer).resolve(deserializationContext);
+      beanDeserializerList.add((JsonDeserializer<T>) rawBeanDeserializer);
+    }
   }
 
   @Override
@@ -140,7 +137,7 @@ public class JsonUnwrappedDeserializer<T> extends JsonDeserializer<T> implements
 
     try (TreeTraversingParser syntheticParser = new TreeTraversingParser(ownNode, jsonParser.getCodec())) {
       syntheticParser.nextToken();
-      return beanDeserializer.deserialize(syntheticParser, deserializationContext);
+      return beanDeserializerList.get(0).deserialize(syntheticParser, deserializationContext);
     }
   }
 
