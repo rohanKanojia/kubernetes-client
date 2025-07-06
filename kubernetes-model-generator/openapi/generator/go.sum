@@ -2116,8 +2116,8 @@ knative.dev/pkg v0.0.0-20250415155312-ed3e2158b883 h1:UeOY7009M0EHwdyW3P35Fc1U6F
 knative.dev/pkg v0.0.0-20250415155312-ed3e2158b883/go.mod h1:ptwLYr04MAyeoRvhnhhz0FFkVZTdYJV2QWnw9sZyFSM=
 knative.dev/reconciler-test v0.0.0-20211207070557-0d138a88867b/go.mod h1:dCq1Fuu+eUISdnxABMvoDhefF91DYwE6O3rTYTraXbw=
 knative.dev/reconciler-test v0.0.0-20220118183433-c8bfbe66bada/go.mod h1:XV4cghzCtdASkfUsfMYSnGfGRyd/naDjy9h7Tnae22g=
-knative.dev/serving v0.45.0 h1:+eOEwSE5+NmhQUUfARHGdSI1gwavddiPMKjl4+sHCjE=
-knative.dev/serving v0.45.0/go.mod h1:AGpRclBUrrSx4KNiyDzAR4DlmENqLKrSNllnBP+h3yw=
+knative.dev/serving v0.45.1 h1:tDbEZEzWeQ3KAhOZato5p7Jahdks9imerPBsiDUhkzk=
+knative.dev/serving v0.45.1/go.mod h1:AGpRclBUrrSx4KNiyDzAR4DlmENqLKrSNllnBP+h3yw=
 open-cluster-management.io/api v0.16.1 h1:mS+4UGxHLPQd7CRM0gdFQdVaz139Lo2bkLfqSE0CDNU=
 open-cluster-management.io/api v0.16.1/go.mod h1:9erZEWEn4bEqh0nIX2wA7f/s3KCuFycQdBrPrRzi0QM=
 open-cluster-management.io/governance-policy-propagator v0.16.0 h1:2oBWdVYgJXcx75d8RS4Ttsic5SIaE5ioG+mug4RAPqI=

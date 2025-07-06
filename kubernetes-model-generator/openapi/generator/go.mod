@@ -49,7 +49,7 @@ require (
 	knative.dev/eventing-kafka-broker v0.45.0
 	knative.dev/eventing-prometheus v0.28.0
 	knative.dev/networking v0.0.0-20250415164913-6268d931d247
-	knative.dev/serving v0.45.0
+	knative.dev/serving v0.45.1
 	open-cluster-management.io/api v0.16.1
 	open-cluster-management.io/governance-policy-propagator v0.16.0
 	open-cluster-management.io/multicloud-operators-channel v0.16.0
