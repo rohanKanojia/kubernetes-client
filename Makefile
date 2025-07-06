@@ -67,7 +67,7 @@ sonar: clean
 
 .PHONY: sonar-pr-report
 sonar-pr-report: clean
-	mvn -Psonar install \
+	mvn -Psonar install sonar:sonar \
 		-Dsonar.login=${SONAR_LOGIN_TOKEN} \
 		-Dsonar.pullrequest.key=${PR_NUMBER} \
 		-Dsonar.pullrequest.branch=${PR_BRANCH} \
