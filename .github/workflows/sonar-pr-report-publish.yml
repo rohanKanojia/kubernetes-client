@@ -65,4 +65,6 @@ jobs:
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
       - name: Sonar
-        run: make sonar-pr-report
+        run: |
+          git log -1
+          make sonar-pr-report
