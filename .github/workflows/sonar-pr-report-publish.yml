@@ -45,6 +45,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          repository: ${{ env.GITHUB_REPO }}
+          ref: ${{ env.PR_BRANCH }}
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
       - name: Setup Java 17
