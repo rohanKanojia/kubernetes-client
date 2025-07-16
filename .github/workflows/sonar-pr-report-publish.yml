@@ -49,6 +49,7 @@ jobs:
           distribution: 'temurin'
       - name: Dump GitHub context
         run: echo '${{ toJSON(github.event) }}'
+
       - name: Get PR number
         run: |
           PR_QUERY_RESULT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
