@@ -42,18 +42,14 @@ jobs:
       GITHUB_REPO: ${{ github.repository }}
       SONAR_LOGIN_TOKEN: ${{ secrets.SONAR_LOGIN_TOKEN }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.GITHUB_REPO }}
-          ref: ${{ env.PR_BRANCH }}
-          # Shallow clones should be disabled for a better relevancy of analysis
-          fetch-depth: 0
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Dump GitHub context
+        run: echo '${{ toJSON(github.event) }}'
+
       - name: Get PR number
         run: |
           PR_QUERY_RESULT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
@@ -63,5 +59,11 @@ jobs:
             exit 1
           fi
           echo "PR_NUMBER=$PR_QUERY_RESULT" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ env.PR_NUMBER }}/head
+          # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Sonar
         run: make sonar-pr-report
