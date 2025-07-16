@@ -47,8 +47,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Dump GitHub context
-        run: echo '${{ toJSON(github.event) }}'
       - name: Get PR number
         run: |
           PR_QUERY_RESULT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
@@ -66,5 +64,4 @@ jobs:
           fetch-depth: 0
       - name: Sonar
         run: |
-          git log -1
           make sonar-pr-report

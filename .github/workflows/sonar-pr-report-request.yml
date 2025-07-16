@@ -44,4 +44,4 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build Project before requesting for Sonar Analysis
-        run: ls
+        run: mvn ${MAVEN_ARGS} install
