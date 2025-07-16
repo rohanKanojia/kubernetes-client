@@ -47,6 +47,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Dump GitHub context
+        run: echo '${{ toJSON(github.event) }}'
       - name: Get PR number
         run: |
           PR_QUERY_RESULT=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
@@ -63,5 +65,4 @@ jobs:
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
       - name: Sonar
-        run: |
-          make sonar-pr-report
+        run: make sonar-pr-report
